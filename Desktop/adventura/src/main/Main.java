@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -30,13 +32,17 @@ import logika.IHra;
  */
 public class Main extends Application {
     
+    private TextArea centralText;
+    private IHra hra;
+    private TextField zadejPrikazTextField;
+    
     @Override
     public void start(Stage primaryStage) {
-        IHra hra = new Hra();
+        hra = new Hra();
         BorderPane borderPane = new BorderPane();
         
         
-        TextArea centralText = new TextArea();
+        centralText = new TextArea();
         centralText.setFont(Font.font("Avenir Next", FontWeight.BOLD, 12));
         centralText.setText(hra.vratUvitani());
         centralText.setEditable(false);
@@ -45,8 +51,29 @@ public class Main extends Application {
         Label zadejPrikazLabel = new Label("Zadej příkaz: ");
         zadejPrikazLabel.setFont(Font.font("Avenir Next", FontWeight.BOLD, 14));
         
-        TextField zadejPrikazTextField = new TextField("...");
+        zadejPrikazTextField = new TextField("...");
+        zadejPrikazTextField.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                String vstupniPrikaz = zadejPrikazTextField.getText();
+                String odpovedHry = hra.zpracujPrikaz(vstupniPrikaz);
+                
+                centralText.appendText("\n" + vstupniPrikaz + "\n");
+                centralText.appendText("\n" + odpovedHry + "\n");
+
+                if (hra.konecHry()){
+                    zadejPrikazTextField.setEditable(false);
+                    centralText.appendText(hra.vratEpilog());
+                }
+            }
+        });
         
+        FlowPane obrazekFlowPane = new FlowPane();
+        ImageView obrazekImageView = new ImageView(
+                new Image(Main.class.getResourceAsStream(
+                        "./zdroje/mapa.xyz"),300,300,false,true));
+        obrazekFlowPane.setAlignment(Pos.CENTER);
         
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
