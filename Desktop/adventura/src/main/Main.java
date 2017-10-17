@@ -70,17 +70,17 @@ public class Main extends Application {
         });
         
         FlowPane obrazekFlowPane = new FlowPane();
-        ImageView obrazekImageView = new ImageView(
-                new Image(Main.class.getResourceAsStream(
-                        "./zdroje/mapa.xyz"),300,300,false,true));
+        ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/mapa.png"),300,300,false,true));
         obrazekFlowPane.setAlignment(Pos.CENTER);
+        obrazekFlowPane.getChildren().add(obrazekImageView);
         
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
         dolniLista.getChildren().addAll(zadejPrikazLabel,zadejPrikazTextField);
-        borderPane.setBottom(dolniLista);
         
-        Scene scene = new Scene(borderPane, 500, 350);
+        borderPane.setLeft(obrazekFlowPane);
+        borderPane.setBottom(dolniLista);
+        Scene scene = new Scene(borderPane, 750, 450);
         
         primaryStage.setTitle("Adventura");
         primaryStage.setScene(scene);
