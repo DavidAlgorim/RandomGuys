@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -35,9 +36,10 @@ public class Main extends Application {
         BorderPane borderPane = new BorderPane();
         
         
-        Text centralText = new Text();
+        TextArea centralText = new TextArea();
         centralText.setFont(Font.font("Avenir Next", FontWeight.BOLD, 12));
         centralText.setText(hra.vratUvitani());
+        centralText.setEditable(false);
         borderPane.setCenter(centralText);
         
         Label zadejPrikazLabel = new Label("Zadej příkaz: ");
