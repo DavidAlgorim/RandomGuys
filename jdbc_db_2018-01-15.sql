@@ -1,4 +1,4 @@
-﻿# ************************************************************
+# ************************************************************
 # Sequel Pro SQL dump
 # Version 4135
 #
@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.42)
 # Database: jdbc_db
-# Generation Time: 2018-01-14 23:45:37 +0000
+# Generation Time: 2018-01-15 09:58:22 +0000
 # ************************************************************
 
 
@@ -26,15 +26,40 @@
 DROP TABLE IF EXISTS `event`;
 
 CREATE TABLE `event` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_event` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nazev` varchar(255) NOT NULL DEFAULT '',
-  `organizator` int(11) NOT NULL,
-  `misto_id` int(11) NOT NULL,
+  `id_osoba` int(11) unsigned NOT NULL,
+  `id_misto` int(11) unsigned NOT NULL,
   `cena` int(11) NOT NULL,
   `zvyhodnena_cena` int(11) NOT NULL,
   `kapacita` int(11) NOT NULL,
   `popis` mediumtext,
-  PRIMARY KEY (`id`)
+  `id_organizator` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_event`),
+  KEY `id_osoba` (`id_osoba`),
+  KEY `id_misto` (`id_misto`),
+  KEY `id_organizator` (`id_organizator`),
+  CONSTRAINT `event_ibfk_3` FOREIGN KEY (`id_organizator`) REFERENCES `organizator` (`id_organizator`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `event_ibfk_1` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id_osoba`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `event_ibfk_2` FOREIGN KEY (`id_misto`) REFERENCES `misto` (`id_misto`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table event_listky
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `event_listky`;
+
+CREATE TABLE `event_listky` (
+  `id_event_listek` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_event` int(11) unsigned NOT NULL,
+  `id_listek` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_event_listek`),
+  KEY `id_event` (`id_event`),
+  KEY `id_listek` (`id_listek`),
+  CONSTRAINT `event_listky_ibfk_2` FOREIGN KEY (`id_listek`) REFERENCES `listek` (`id_listek`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `event_listky_ibfk_1` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -45,10 +70,16 @@ CREATE TABLE `event` (
 DROP TABLE IF EXISTS `hodnoceni`;
 
 CREATE TABLE `hodnoceni` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_hodnoceni` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `hodnoceni` int(1) NOT NULL,
   `text_hodnoceni` tinytext,
-  PRIMARY KEY (`id`)
+  `id_osoba` int(11) unsigned NOT NULL,
+  `id_event` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_hodnoceni`),
+  KEY `id_osoba` (`id_osoba`),
+  KEY `id_event` (`id_event`),
+  CONSTRAINT `hodnoceni_ibfk_2` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `hodnoceni_ibfk_1` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id_osoba`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -59,11 +90,16 @@ CREATE TABLE `hodnoceni` (
 DROP TABLE IF EXISTS `listek`;
 
 CREATE TABLE `listek` (
-  `osoba_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `zakaznik` varchar(255) DEFAULT NULL,
-  `zvyhodneni` tinyint(1) DEFAULT NULL,
-  `event_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`osoba_id`)
+  `id_listek` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `zakaznik` varchar(255) NOT NULL DEFAULT '',
+  `zvyhodneni` tinyint(1) NOT NULL,
+  `id_event` int(11) unsigned NOT NULL,
+  `id_osoba` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_listek`),
+  KEY `id_osoba` (`id_osoba`),
+  KEY `id_event` (`id_event`),
+  CONSTRAINT `listek_ibfk_2` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `listek_ibfk_1` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id_osoba`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -74,12 +110,27 @@ CREATE TABLE `listek` (
 DROP TABLE IF EXISTS `misto`;
 
 CREATE TABLE `misto` (
-  `misto_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_misto` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nazev` varchar(255) NOT NULL DEFAULT '',
   `adresa` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `telefon` int(11) NOT NULL,
-  PRIMARY KEY (`misto_id`)
+  PRIMARY KEY (`id_misto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table organizator
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `organizator`;
+
+CREATE TABLE `organizator` (
+  `id_organizator` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `jmeno` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `telefon` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_organizator`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -90,11 +141,29 @@ CREATE TABLE `misto` (
 DROP TABLE IF EXISTS `osoba`;
 
 CREATE TABLE `osoba` (
-  `osoba_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_osoba` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `jmeno` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `username` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`osoba_id`)
+  PRIMARY KEY (`id_osoba`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table osoba_listky
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `osoba_listky`;
+
+CREATE TABLE `osoba_listky` (
+  `id_osoba_listky` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_listek` int(11) unsigned NOT NULL,
+  `id_osoba` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_osoba_listky`),
+  KEY `id_listek` (`id_listek`),
+  KEY `id_osoba` (`id_osoba`),
+  CONSTRAINT `osoba_listky_ibfk_2` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id_osoba`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `osoba_listky_ibfk_1` FOREIGN KEY (`id_listek`) REFERENCES `listek` (`id_listek`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
