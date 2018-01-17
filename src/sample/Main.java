@@ -17,6 +17,7 @@ public class Main extends Application {
 
     private Button showEvent = new Button();
     private Stage mainStage = new Stage();
+    private PrihlaseniUI prihlaseniUI = new PrihlaseniUI();
     //neregistrovaný
     private BorderPane guestBorderPane = new BorderPane();
     private Label guestTitleLabel = new Label();
@@ -55,13 +56,14 @@ public class Main extends Application {
         showEvent.setText("Eventy");
         showEvent.setPrefWidth(150);
 
-        //if (user není přihlášen)
         uiNeregistrovany();
-        //else if (user je přihlášen)
-        uiRegistrovany();
 
         mainStage.setTitle("RandomGuys");
         mainStage.show();
+
+        guestLoginButton.setOnMouseClicked(event -> {
+            prihlaseniUI.nactiUI(mainStage);
+        });
     }
 
     private void uiNeregistrovany(){
@@ -80,7 +82,7 @@ public class Main extends Application {
         guestCenterVbox.getChildren().addAll(guestTitleLabel,showEvent);
         guestCenterVbox.setAlignment(Pos.CENTER);
         guestCenterVbox.setSpacing(200);
-        mainStage.setScene(new Scene(guestBorderPane, 1400, 720));
+        mainStage.setScene(new Scene(guestBorderPane, 1200, 720));
     }
 
     private void uiRegistrovany(){
