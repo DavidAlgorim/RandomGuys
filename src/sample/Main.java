@@ -55,10 +55,7 @@ public class Main extends Application {
         showEvent.setText("Eventy");
         showEvent.setPrefWidth(150);
 
-        //if (user není přihlášen)
         uiNeregistrovany();
-        //else if (user je přihlášen)
-        uiRegistrovany();
 
         mainStage.setTitle("RandomGuys");
         mainStage.show();
