@@ -137,7 +137,10 @@ public class Main extends Application {
         adminPlaceButtonHbox.setAlignment(Pos.CENTER);
         adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
         adminAdminButtonHbox.setAlignment(Pos.CENTER);*/
-        mainStage.setScene(new Scene(registredBorderPane, 1400, 720));
+
+
+        //trochu zmenšená Scene, ať se vejde i na menší rozlišení  nebo rescaled
+        mainStage.setScene(new Scene(registredBorderPane, 1200, 720));
     }
 
 
