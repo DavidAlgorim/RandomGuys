@@ -139,6 +139,7 @@ public class Main extends Application {
         adminAdminButtonHbox.setAlignment(Pos.CENTER);*/
 
 
+
         //trochu zmenšená Scene, ať se vejde i na menší rozlišení  nebo rescaled
         mainStage.setScene(new Scene(registredBorderPane, 1200, 720));
     }
