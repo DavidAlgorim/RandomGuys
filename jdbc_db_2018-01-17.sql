@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.42)
 # Database: jdbc_db
-# Generation Time: 2018-01-17 15:37:02 +0000
+# Generation Time: 2018-01-17 22:55:57 +0000
 # ************************************************************
 
 
@@ -147,6 +147,7 @@ CREATE TABLE `osoba` (
   `username` varchar(100) NOT NULL DEFAULT '',
   `pass_hash` varchar(60) NOT NULL DEFAULT '',
   `status` varchar(255) NOT NULL DEFAULT '',
+  `body` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_osoba`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
