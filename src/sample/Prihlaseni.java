@@ -1,22 +1,40 @@
 package sample;
 
+import com.sun.tools.javac.code.Attribute;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public class Prihlaseni {
+public final class Prihlaseni {
 
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String dbConnection = "jdbc:mysql://127.0.0.1:3306";
+    private static final String dbConnection = "jdbc:mysql://localhost:8889";
     private static final String dbUser = "root";
-    private static final String dbPassword = "passw0rd";
+    private static final String dbPassword = "root";
 
-    public void databazovaFunkce(String funkce, String parametr) {
+    public static Connection getDBConn(){
+        Connection connection = null;
+
+        try {
+            //          Otevreni komunikace do databaze
+            Class.forName(DB_DRIVER);
+            connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
+        }
+        catch (SQLException | NullPointerException | ClassNotFoundException ex){
+
+        }
+        return connection;
+    }
+
+    public static void databazovaFunkce(String funkce, String parametr) {
 
         Connection connection = null;
         PreparedStatement statement = null;
+
 
         try {
 
@@ -35,27 +53,9 @@ public class Prihlaseni {
 
                 nactiZDB(rs);
                 rs.close();
-            }
+            } else if (funkce.equals("INSERT")) {
 
-            if (funkce.equals("INSERT")) {
-
-                statement = connection.prepareStatement(parametr);
-
-                statement.setString(1, addID.getText());
-                statement.setString(2, addJmeno.getText());
-
-                statement.executeUpdate();
-
-            }
-
-            if (funkce.equals("UPDATE")) {
-
-                statement = connection.prepareStatement(parametr);
-
-                statement.setString(1, changeItem);
-                statement.setString(2, changeID);
-
-                statement.executeUpdate();
+                statement =
             }
 
 //              uzavreni spojeni
@@ -94,29 +94,34 @@ public class Prihlaseni {
 
     }
 
+    public static void nactiZDB(ResultSet rs) {
+        try {
+            while (rs.next()) {
 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Prihlaseni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     public static Osoba prihlasitSe(String username, String heslo){
-        try{
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/jdbc_db");
 
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("");
+        String hash = "";
+        try {
+            String sql = "SELECT pass_hash FROM osoba WHERE username = ?";
+            Connection conn = getDBConn();
+            PreparedStatement pstmt = conn.prepareStatement( sql );
+            pstmt.setString( 1, username);
+            ResultSet results = pstmt.executeQuery( );
+            hash = results.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //vůbec nevím jak s tím propojením s db
-        String hesloDb = "";
-        String status = "";
-
-        if(BCrypt.checkpw(heslo, hesloDb)) {
-            if (status.equals("spravce")) {
-                return Spravce;
-            } else {
-                return Zakaznik;
-            }
-
+        if(BCrypt.checkpw(heslo, hash)) {
+            System.out.println(hash);
+            return new Uzivatel(username);
         } else {
+            System.out.println("DEMENT");
             return null;
         }
 

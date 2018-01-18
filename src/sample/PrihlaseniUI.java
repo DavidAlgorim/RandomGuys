@@ -11,8 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class PrihlaseniUI {
@@ -60,6 +58,11 @@ public class PrihlaseniUI {
         stage.setScene(scene);
         stage.show();
 
+
+        loginButton.setOnMouseClicked(event ->  {
+            prihlasovani();
+        });
+
         registerText.setOnMouseClicked(event -> {
             stage.setScene(registerScene);
         });
@@ -68,6 +71,14 @@ public class PrihlaseniUI {
             stage.setScene(scene);
         });
     }
+
+
+
+    public void prihlasovani(){
+        Prihlaseni.databazovaFunkce("GET", "SELECT * FROM jdbc_db.osoba WHERE username LIKE \"" + getEmail().getText() + "\";");
+        Prihlaseni.prihlasitSe(getEmail().getText(), getPassword().getText());
+    }
+
 
 
     private void prihlaseniUI(){
@@ -84,8 +95,8 @@ public class PrihlaseniUI {
         centerVbox.setSpacing(10);
         centerVbox.setAlignment(Pos.CENTER);
         centerVbox.setMaxWidth(220);
-        emailHbox.getChildren().addAll(emailLabel,email);
-        passwordHbox.getChildren().addAll(passwordLabel,password);
+        emailHbox.getChildren().addAll(emailLabel, getEmail());
+        passwordHbox.getChildren().addAll(passwordLabel, getPassword());
         emailLabel.setText("Email:  ");
         emailLabel.setPrefWidth(70);
         passwordLabel.setText("Heslo:  ");
@@ -95,14 +106,6 @@ public class PrihlaseniUI {
         scene = new Scene(borderPane, 1200,720);
     }
 
-
-    public String getEmail() {
-        return email.getText();
-    }
-
-    public String getPassword() {
-        return password.getText();
-    }
 
 
     private void registraceUI(){
@@ -136,4 +139,19 @@ public class PrihlaseniUI {
         registerScene = new Scene(registerBorderPane, 1200,720);
     }
 
+    public TextField getEmail() {
+        return email;
+    }
+
+    public void setEmail(TextField email) {
+        this.email = email;
+    }
+
+    public TextField getPassword() {
+        return password;
+    }
+
+    public void setPassword(TextField password) {
+        this.password = password;
+    }
 }
