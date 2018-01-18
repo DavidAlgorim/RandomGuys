@@ -12,6 +12,8 @@ public final class Prihlaseni {
         try {
             ResultSet rs = new Databaze().databazeGET("SELECT pass_hash FROM osoba WHERE username = ?",
                     username);
+            if(rs == null)
+                return null;
             hash = rs.getString(1);
             rs.close();
         } catch (SQLException e) {
