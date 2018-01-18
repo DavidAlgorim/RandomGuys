@@ -40,7 +40,7 @@ public final class Prihlaseni {
                     return new Uzivatel(username);
             }
         } else {
-            System.out.println("DEMENT - Špatné jméno nebo heslo");
+            System.out.println("Špatné jméno nebo heslo");
             return null;
         }
     }

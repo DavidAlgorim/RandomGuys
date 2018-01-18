@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 
@@ -65,6 +66,33 @@ public class Databaze {
                 statement.setString(i,udaj);
                 i++;
             }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException | NullPointerException ex) {
+            databazeChybaPripojeniAlert(ex);
+            return false;
+        } finally {
+            finallyBlockDatabazovaFunkce(statement,connection);
+        }
+
+        return true;
+    }
+
+    public boolean databazeInsertNewUser(String parametr, String jmeno, String email, String username, String heslo) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = getDBConn();
+
+
+
+            statement.setString(1,jmeno);
+            statement.setString(2,email);
+            statement.setString(3,username);
+            statement.setString(4,heslo);
+
+
 
             statement.close();
             connection.close();
