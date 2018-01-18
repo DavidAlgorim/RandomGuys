@@ -39,14 +39,17 @@ public class PrihlaseniUI {
     private TextField registerName = new TextField();
     private TextField registerSurname = new TextField();
     private TextField registerEmail = new TextField();
+    private TextField registerUsername = new TextField();
     private TextField registerPassword = new TextField();
     private HBox registerNameHbox = new HBox();
     private HBox registerSurNameHbox = new HBox();
     private HBox registerEmailHbox = new HBox();
+    private HBox registerUsernameHbox = new HBox();
     private HBox registerPasswordHbox = new HBox();
     private Label registerNameLabel = new Label();
     private Label registerSurnameLabel = new Label();
     private Label registerEmailLabel = new Label();
+    private Label registerUsernameLabel = new Label();
     private Label registerPasswordLabel = new Label();
     private Button registerButton = new Button();
     private Button registerBackButton = new Button();
@@ -69,6 +72,10 @@ public class PrihlaseniUI {
 
         registerBackButton.setOnMouseClicked(event -> {
             stage.setScene(scene);
+        });
+        registerButton.setOnMouseClicked(event -> {
+            new Neregistrovany().registrujSe(getRegisterName().getText() + " " + getRegisterSurname().getText(),
+                    getRegisterEmail().getText(), getRegisterUsername().getText(),getRegisterPassword().getText());
         });
     }
 
@@ -128,20 +135,23 @@ public class PrihlaseniUI {
         registerTopHbox.getChildren().add(registerTitleLabel);
         registerTopHbox.setAlignment(Pos.CENTER);
         registerTopHbox.setPadding(new Insets(20));
-        registerCenterVbox.getChildren().addAll(registerNameHbox, registerSurNameHbox, registerEmailHbox, registerPasswordHbox, registerButton, registerBackButton);
+        registerCenterVbox.getChildren().addAll(registerNameHbox, registerSurNameHbox, registerEmailHbox, registerUsernameHbox, registerPasswordHbox, registerButton, registerBackButton);
         registerCenterVbox.setSpacing(10);
         registerCenterVbox.setAlignment(Pos.CENTER);
         registerCenterVbox.setMaxWidth(220);
-        registerNameHbox.getChildren().addAll(registerNameLabel, registerName);
-        registerSurNameHbox.getChildren().addAll(registerSurnameLabel, registerSurname);
-        registerEmailHbox.getChildren().addAll(registerEmailLabel, registerEmail);
-        registerPasswordHbox.getChildren().addAll(registerPasswordLabel, registerPassword);
+        registerNameHbox.getChildren().addAll(registerNameLabel, getRegisterName());
+        registerSurNameHbox.getChildren().addAll(registerSurnameLabel, getRegisterSurname());
+        registerEmailHbox.getChildren().addAll(registerEmailLabel, getRegisterEmail());
+        registerUsernameHbox.getChildren().addAll(registerUsernameLabel, getRegisterUsername());
+        registerPasswordHbox.getChildren().addAll(registerPasswordLabel, getRegisterPassword());
         registerNameLabel.setText("Jméno:  ");
         registerNameLabel.setPrefWidth(70);
         registerSurnameLabel.setText("Příjmení:  ");
         registerSurnameLabel.setPrefWidth(70);
         registerEmailLabel.setText("Email:  ");
         registerEmailLabel.setPrefWidth(70);
+        registerUsernameLabel.setText("Uživatelské jméno:  ");
+        registerUsernameLabel.setPrefWidth(70);
         registerPasswordLabel.setText("Heslo:  ");
         registerPasswordLabel.setPrefWidth(70);
         registerButton.setText("Registrace");
@@ -165,5 +175,25 @@ public class PrihlaseniUI {
 
     public void setPassword(TextField password) {
         this.password = password;
+    }
+
+    public TextField getRegisterName() {
+        return registerName;
+    }
+
+    public TextField getRegisterSurname() {
+        return registerSurname;
+    }
+
+    public TextField getRegisterEmail() {
+        return registerEmail;
+    }
+
+    public TextField getRegisterPassword() {
+        return registerPassword;
+    }
+
+    public TextField getRegisterUsername() {
+        return registerUsername;
     }
 }
