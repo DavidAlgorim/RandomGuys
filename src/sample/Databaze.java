@@ -9,7 +9,7 @@ import java.sql.*;
 public class Databaze {
 
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String dbConnection = "jdbc:mysql://localhost:8889";
+    private static final String dbConnection = "jdbc:mysql://localhost:8889/jdbc_db";
     private static final String dbUser = "root";
     private static final String dbPassword = "root";
 
@@ -126,7 +126,7 @@ public class Databaze {
                 System.out.println(ex.getMessage());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("DB");
-                alert.setHeaderText("Chyba pripojeni");
+                alert.setHeaderText("Chyba pripojeni: " + ex.getMessage());
 
                 alert.showAndWait();
                 System.out.println(ex.getMessage());
