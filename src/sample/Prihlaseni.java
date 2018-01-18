@@ -43,10 +43,6 @@ public class Prihlaseni {
 
                 statement.setString(1, addID.getText());
                 statement.setString(2, addJmeno.getText());
-                statement.setString(3, addPrijmeni.getText());
-                statement.setString(4, addAdresa.getText());
-                statement.setString(5, addPohlavi.getText());
-                statement.setString(6, addVzdelani.getText());
 
                 statement.executeUpdate();
 

@@ -69,6 +69,7 @@ public class PrihlaseniUI {
         });
     }
 
+
     private void prihlaseniUI(){
         borderPane.setCenter(centerVbox);
         borderPane.setTop(topHbox);
@@ -93,6 +94,16 @@ public class PrihlaseniUI {
         loginBackButton.setPrefWidth(220);
         scene = new Scene(borderPane, 1200,720);
     }
+
+
+    public String getEmail() {
+        return email.getText();
+    }
+
+    public String getPassword() {
+        return password.getText();
+    }
+
 
     private void registraceUI(){
         registerBorderPane.setCenter(registerCenterVbox);
