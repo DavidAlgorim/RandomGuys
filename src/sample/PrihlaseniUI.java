@@ -75,8 +75,20 @@ public class PrihlaseniUI {
 
 
     public void prihlasovani(){
-        Prihlaseni.databazovaFunkce("GET", "SELECT * FROM jdbc_db.osoba WHERE username LIKE \"" + getEmail().getText() + "\";");
-        Prihlaseni.prihlasitSe(getEmail().getText(), getPassword().getText());
+        // Pracoval bych spíše s username, takže jen všude nahradit email za username
+        Osoba uzivatel = Prihlaseni.prihlasitSe(getEmail().getText(), getPassword().getText());
+        if(uzivatel instanceof Uzivatel){
+            // Zobrazit UI pro přihlášené
+        }
+        else if(uzivatel instanceof Spravce){
+            // Zobrazit UI pro správce
+        }
+        else if(uzivatel instanceof Admin){
+            // Zobrazit UI pro admina
+        }
+        else{
+            // Zobrazit uživateli alert, že je chybné jméno nebo heslo
+        }
     }
 
 
