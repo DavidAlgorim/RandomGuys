@@ -54,7 +54,10 @@ public class PrihlaseniUI {
     private Button registerButton = new Button();
     private Button registerBackButton = new Button();
 
-    public void nactiUI(Stage stage){
+    private Main main;
+
+    public void nactiUI(Stage stage, Main main){
+        this.main = main;
         prihlaseniUI();
         registraceUI();
 
@@ -76,6 +79,10 @@ public class PrihlaseniUI {
         registerButton.setOnMouseClicked(event -> {
             new Neregistrovany().registrujSe(getRegisterName().getText() + " " + getRegisterSurname().getText(),
                     getRegisterEmail().getText(), getRegisterUsername().getText(),getRegisterPassword().getText());
+        });
+
+        loginBackButton.setOnMouseClicked(event -> {
+            this.main.zobrazMainMenuUI();
         });
     }
 
@@ -101,64 +108,70 @@ public class PrihlaseniUI {
 
 
     private void prihlaseniUI(){
-        borderPane.setCenter(centerVbox);
-        borderPane.setTop(topHbox);
-        topHbox.getChildren().add(titleLabel);
-        topHbox.setAlignment(Pos.CENTER);
-        topHbox.setPadding(new Insets(20));
-        titleLabel.setFont(Font.font("Arial",32));
-        titleLabel.setText("Přihlášení");
-        loginButton.setText("Přihlásit");
-        loginButton.setPrefWidth(220);
-        centerVbox.getChildren().addAll(emailHbox, passwordHbox, loginButton, loginBackButton, registerText);
-        centerVbox.setSpacing(10);
-        centerVbox.setAlignment(Pos.CENTER);
-        centerVbox.setMaxWidth(220);
-        emailHbox.getChildren().addAll(emailLabel, getEmail());
-        passwordHbox.getChildren().addAll(passwordLabel, getPassword());
-        emailLabel.setText("Email:  ");
-        emailLabel.setPrefWidth(70);
-        passwordLabel.setText("Heslo:  ");
-        passwordLabel.setPrefWidth(70);
-        loginBackButton.setText("Zpět");
-        loginBackButton.setPrefWidth(220);
-        scene = new Scene(borderPane, 1200,720);
+        if (scene == null)
+        {
+            borderPane.setCenter(centerVbox);
+            borderPane.setTop(topHbox);
+            topHbox.getChildren().add(titleLabel);
+            topHbox.setAlignment(Pos.CENTER);
+            topHbox.setPadding(new Insets(20));
+            titleLabel.setFont(Font.font("Arial",32));
+            titleLabel.setText("Přihlášení");
+            loginButton.setText("Přihlásit");
+            loginButton.setPrefWidth(220);
+            centerVbox.getChildren().addAll(emailHbox, passwordHbox, loginButton, loginBackButton, registerText);
+            centerVbox.setSpacing(10);
+            centerVbox.setAlignment(Pos.CENTER);
+            centerVbox.setMaxWidth(220);
+            emailHbox.getChildren().addAll(emailLabel, getEmail());
+            passwordHbox.getChildren().addAll(passwordLabel, getPassword());
+            emailLabel.setText("Email:  ");
+            emailLabel.setPrefWidth(70);
+            passwordLabel.setText("Heslo:  ");
+            passwordLabel.setPrefWidth(70);
+            loginBackButton.setText("Zpět");
+            loginBackButton.setPrefWidth(220);
+            scene = new Scene(borderPane, 1200,720);
+        }
     }
 
 
 
     private void registraceUI(){
-        registerBorderPane.setCenter(registerCenterVbox);
-        registerBorderPane.setTop(registerTopHbox);
-        registerTitleLabel.setFont(Font.font("Arial",32));
-        registerTitleLabel.setText("Registrace");
-        registerTopHbox.getChildren().add(registerTitleLabel);
-        registerTopHbox.setAlignment(Pos.CENTER);
-        registerTopHbox.setPadding(new Insets(20));
-        registerCenterVbox.getChildren().addAll(registerNameHbox, registerSurNameHbox, registerEmailHbox, registerUsernameHbox, registerPasswordHbox, registerButton, registerBackButton);
-        registerCenterVbox.setSpacing(10);
-        registerCenterVbox.setAlignment(Pos.CENTER);
-        registerCenterVbox.setMaxWidth(220);
-        registerNameHbox.getChildren().addAll(registerNameLabel, getRegisterName());
-        registerSurNameHbox.getChildren().addAll(registerSurnameLabel, getRegisterSurname());
-        registerEmailHbox.getChildren().addAll(registerEmailLabel, getRegisterEmail());
-        registerUsernameHbox.getChildren().addAll(registerUsernameLabel, getRegisterUsername());
-        registerPasswordHbox.getChildren().addAll(registerPasswordLabel, getRegisterPassword());
-        registerNameLabel.setText("Jméno:  ");
-        registerNameLabel.setPrefWidth(70);
-        registerSurnameLabel.setText("Příjmení:  ");
-        registerSurnameLabel.setPrefWidth(70);
-        registerEmailLabel.setText("Email:  ");
-        registerEmailLabel.setPrefWidth(70);
-        registerUsernameLabel.setText("Uživatelské jméno:  ");
-        registerUsernameLabel.setPrefWidth(70);
-        registerPasswordLabel.setText("Heslo:  ");
-        registerPasswordLabel.setPrefWidth(70);
-        registerButton.setText("Registrace");
-        registerButton.setPrefWidth(220);
-        registerBackButton.setText("Zpět");
-        registerBackButton.setPrefWidth(220);
-        registerScene = new Scene(registerBorderPane, 1200,720);
+        if(registerScene == null)
+        {
+            registerBorderPane.setCenter(registerCenterVbox);
+            registerBorderPane.setTop(registerTopHbox);
+            registerTitleLabel.setFont(Font.font("Arial",32));
+            registerTitleLabel.setText("Registrace");
+            registerTopHbox.getChildren().add(registerTitleLabel);
+            registerTopHbox.setAlignment(Pos.CENTER);
+            registerTopHbox.setPadding(new Insets(20));
+            registerCenterVbox.getChildren().addAll(registerNameHbox, registerSurNameHbox, registerEmailHbox, registerUsernameHbox, registerPasswordHbox, registerButton, registerBackButton);
+            registerCenterVbox.setSpacing(10);
+            registerCenterVbox.setAlignment(Pos.CENTER);
+            registerCenterVbox.setMaxWidth(220);
+            registerNameHbox.getChildren().addAll(registerNameLabel, getRegisterName());
+            registerSurNameHbox.getChildren().addAll(registerSurnameLabel, getRegisterSurname());
+            registerEmailHbox.getChildren().addAll(registerEmailLabel, getRegisterEmail());
+            registerUsernameHbox.getChildren().addAll(registerUsernameLabel, getRegisterUsername());
+            registerPasswordHbox.getChildren().addAll(registerPasswordLabel, getRegisterPassword());
+            registerNameLabel.setText("Jméno:  ");
+            registerNameLabel.setPrefWidth(70);
+            registerSurnameLabel.setText("Příjmení:  ");
+            registerSurnameLabel.setPrefWidth(70);
+            registerEmailLabel.setText("Email:  ");
+            registerEmailLabel.setPrefWidth(70);
+            registerUsernameLabel.setText("Uživatelské jméno:  ");
+            registerUsernameLabel.setPrefWidth(70);
+            registerPasswordLabel.setText("Heslo:  ");
+            registerPasswordLabel.setPrefWidth(70);
+            registerButton.setText("Registrace");
+            registerButton.setPrefWidth(220);
+            registerBackButton.setText("Zpět");
+            registerBackButton.setPrefWidth(220);
+            registerScene = new Scene(registerBorderPane, 1200,720);
+        }
     }
 
     public TextField getEmail() {

@@ -2,23 +2,24 @@ package sample;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import sun.rmi.runtime.Log;
 
 public class Main extends Application {
 
     private Button showEvent = new Button();
     private Stage mainStage = new Stage();
     private PrihlaseniUI prihlaseniUI = new PrihlaseniUI();
+    private SeznamEventuUI seznamEventuUI = new SeznamEventuUI();
     //neregistrovaný
+    private Scene guestScene;
     private BorderPane guestBorderPane = new BorderPane();
     private Label guestTitleLabel = new Label();
     private Button guestLoginButton = new Button();
@@ -26,6 +27,7 @@ public class Main extends Application {
     private VBox guestCenterVbox = new VBox();
 
     //registrovaný
+    private Scene registredScene;
     private BorderPane registredBorderPane = new BorderPane();
     private Button registredHistory = new Button();
     private Button registredReview = new Button();
@@ -62,7 +64,11 @@ public class Main extends Application {
         mainStage.show();
 
         guestLoginButton.setOnMouseClicked(event -> {
-            prihlaseniUI.nactiUI(mainStage);
+            prihlaseniUI.nactiUI(mainStage, this);
+        });
+
+        showEvent.setOnMouseClicked(event -> {
+            seznamEventuUI.nactiUI(mainStage, this);
         });
     }
 
@@ -82,7 +88,8 @@ public class Main extends Application {
         guestCenterVbox.getChildren().addAll(guestTitleLabel,showEvent);
         guestCenterVbox.setAlignment(Pos.CENTER);
         guestCenterVbox.setSpacing(200);
-        mainStage.setScene(new Scene(guestBorderPane, 1200, 720));
+        guestScene = new Scene(guestBorderPane, 1200, 720);
+        mainStage.setScene(guestScene);
     }
 
     private void uiRegistrovany(){
@@ -142,8 +149,16 @@ public class Main extends Application {
 
 
 
-        //trochu zmenšená Scene, ať se vejde i na menší rozlišení  nebo rescaled
-        mainStage.setScene(new Scene(registredBorderPane, 1200, 720));
+        registredScene = new Scene(registredBorderPane, 1200, 720);
+        mainStage.setScene(registredScene);
+    }
+
+    public void zobrazMainMenuUI(){
+        //vytvoří se podmínka pro
+        //if (user login) -> zobrazí UI pro registrovaného
+        //mainStage.setScene(registredScene);
+        //else if (!user login) -> zobrazí UI pro neregistrovaného
+        mainStage.setScene(guestScene);
     }
 
 
