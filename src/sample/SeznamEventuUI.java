@@ -29,11 +29,15 @@ public class SeznamEventuUI {
     private BorderPane borderPane = new BorderPane();
     private HBox bottomHbox = new HBox();
     private Button backButton = new Button();
+    private Button _provizorni = new Button();
 
     private Main main;
+    private Stage stage;
+    private EventDetailUI eventDetailUI = new EventDetailUI();
 
     public void nactiUI(Stage stage, Main main){
         this.main = main;
+        this.stage = stage;
 
         vytvorScenu();
         stage.setScene(scene);
@@ -42,6 +46,14 @@ public class SeznamEventuUI {
         backButton.setOnMouseClicked(event -> {
             main.zobrazMainMenuUI();
         });
+
+        _provizorni.setOnMouseClicked(event -> {
+            eventDetailUI.nactiUI(stage, this);
+        });
+    }
+
+    public void zobrazSeznamEventuUI(){
+        stage.setScene(scene);
     }
 
     private void vytvorScenu(){
@@ -50,10 +62,11 @@ public class SeznamEventuUI {
             borderPane.setCenter(vytvorTabulku());
             backButton.setText("Zpět");
             backButton.setPrefWidth(150);
-            bottomHbox.getChildren().add(backButton);
+            bottomHbox.getChildren().addAll(backButton, _provizorni);
             bottomHbox.setPadding(new Insets(10));
             bottomHbox.setAlignment(Pos.CENTER);
             borderPane.setBottom(bottomHbox);
+            _provizorni.setText("provizorní tlačítko další hehe (předělá se na klik eventu)");
             scene = new Scene(borderPane, 1200,720);
         }
     }
