@@ -46,6 +46,31 @@ public class Databaze {
 //        return rs;
 //    }
 
+    public static void databazeInsertNewHodnoceni(int hodnoceni, String textHodnoceni, int idEvent) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO hodnoceni (hodnoceni, text_hodnoceni, id_event) VALUES (?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, hodnoceni);
+            statement.setString(2, textHodnoceni);
+            statement.setInt(3, idEvent);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+
     public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {
         try {
             //připojení k databázi
@@ -70,12 +95,7 @@ public class Databaze {
             connection.close();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Query error");
-            alert.setHeaderText("Chyba pripojeni: " + e.getMessage());
-
-            alert.showAndWait();
+            alertException(e);
         }
     }
 
@@ -101,12 +121,7 @@ public class Databaze {
             connection.close();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Query error");
-            alert.setHeaderText("Chyba pripojeni: " + e.getMessage());
-
-            alert.showAndWait();
+            alertException(e);
         }
     }
 
@@ -126,5 +141,14 @@ public class Databaze {
             alert.showAndWait();
         }
         return connection;
+    }
+
+    private static void alertException(Exception e) {
+        System.out.println(e.getMessage());
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Query error");
+        alert.setHeaderText("Chyba pripojeni: " + e.getMessage());
+
+        alert.showAndWait();
     }
 }
