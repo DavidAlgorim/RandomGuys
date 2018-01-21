@@ -45,38 +45,39 @@ public class Databaze {
 //        }
 //        return rs;
 //    }
-////
-//
-//    /**
-//     * Přidává údaje do databáze dle zadaného parametru
-//     * @param parametr SQL příkaz
-//     * @param udaje údaje, které mají být zapsány do databáze
-//     * @return true, pokud vše proběhlo v pořádku
-//     */
-//    public boolean databazeInsert(String parametr, String... udaje){
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//
-//            // Hodně hrubý návrh, kde pracuji pouze se Stringama. Ale jde to i takto jednoduše, můžeme udělat zvlášť
-//            // funkci pro každou entitu (Osoba, Event, Organizator, Misto,..)
-//            int i = 1;
-//            for (String udaj : udaje) {
-//                statement.setString(i,udaj);
-//                i++;
-//            }
-//
-//            statement.close();
-//            connection.close();
-//        } catch (SQLException | NullPointerException ex) {
-//            databazeChybaPripojeniAlert(ex);
-//            return false;
-//        } finally {
-//            finallyBlockDatabazovaFunkce(statement,connection);
-//        }
-//
-//        return true;
-//    }
+
+    public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO event (nazev, id_misto, cena, zvyhodnena_cena, kapacita, popis, id_organizator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setString(1, nazev);
+            statement.setInt(2, idMisto);
+            statement.setDouble(3, cena);
+            statement.setDouble(4, zvyhodnenaCena);
+            statement.setInt(5, kapacita);
+            statement.setString(6, popis);
+            statement.setInt(7, idOrganizator);
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Query error");
+            alert.setHeaderText("Chyba pripojeni: " + e.getMessage());
+
+            alert.showAndWait();
+        }
+    }
 
     public static void databazeInsertNewUser(String jmeno, String email, String username, String heslo) {
         try {
@@ -102,7 +103,7 @@ public class Databaze {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Query error");
             alert.setHeaderText("Chyba pripojeni: " + e.getMessage());
 
             alert.showAndWait();
@@ -118,35 +119,12 @@ public class Databaze {
         }
         catch (SQLException | NullPointerException | ClassNotFoundException ex){
             System.out.println("Database connection failed");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Connection error");
+            alert.setHeaderText("Chyba pripojeni: " + ex.getMessage());
+
+            alert.showAndWait();
         }
         return connection;
     }
-
-//    private void databazeChybaPripojeniAlert(Exception ex){
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                System.out.println(ex.getMessage());
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("DB");
-//                alert.setHeaderText("Chyba pripojeni: " + ex.getMessage());
-//
-//                alert.showAndWait();
-//            }
-//        });
-//    }
-//
-//    private void finallyBlockDatabazovaFunkce(Statement statement, Connection connection){
-//        try {
-//            if (statement != null) {
-//                statement.close();
-//            }
-//            if (connection != null) {
-//                connection.close();
-//            }
-//        } catch (SQLException se) {
-//            System.out.println(se.getMessage());
-//        }
-//    }
-
 }
