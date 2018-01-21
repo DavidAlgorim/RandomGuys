@@ -77,8 +77,8 @@ public class PrihlaseniUI {
             stage.setScene(scene);
         });
         registerButton.setOnMouseClicked(event -> {
-            new Neregistrovany().registrujSe(getRegisterName().getText() + " " + getRegisterSurname().getText(),
-                    getRegisterEmail().getText(), getRegisterUsername().getText(),getRegisterPassword().getText());
+            Databaze.databazeInsertNewUser(getRegisterName().getText() + " " + getRegisterSurname().getText(),
+                    getRegisterEmail().getText(), getRegisterUsername().getText(), getRegisterPassword().getText());
         });
 
         loginBackButton.setOnMouseClicked(event -> {
