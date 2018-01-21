@@ -46,6 +46,37 @@ public class Databaze {
 //        return rs;
 //    }
 
+
+
+    public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO event (nazev, id_misto, cena, zvyhodnena_cena, kapacita, popis, id_organizator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setString(1, nazev);
+            statement.setInt(2, idMisto);
+            statement.setDouble(3, cena);
+            statement.setDouble(4, zvyhodnenaCena);
+            statement.setInt(5, kapacita);
+            statement.setString(6, popis);
+            statement.setInt(7, idOrganizator);
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+
+
     public static void databazeInsertNewHodnoceni(int hodnoceni, String textHodnoceni, int idEvent) {
         try {
             //připojení k databázi
@@ -70,24 +101,46 @@ public class Databaze {
             alertException(e);
         }
     }
-
-    public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {
+    //lístek asi nejlépe řešit Overloadem, jinak mě moc nenapadá jak řešit registrovaného a neregistrovaného
+    public static void databazeInsertNewListek(String zakaznik, int zvyhodneni, int idEvent) {
         try {
             //připojení k databázi
             Connection connection = getDBConn();
 
             //insert SQL příkaz
-            String insert = "INSERT INTO event (nazev, id_misto, cena, zvyhodnena_cena, kapacita, popis, id_organizator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String insert = "INSERT INTO listek (zakaznik, zvyhodneni, id_event) VALUES (?, ?, ?)";
 
             //statement
             PreparedStatement statement = connection.prepareStatement(insert);
-            statement.setString(1, nazev);
-            statement.setInt(2, idMisto);
-            statement.setDouble(3, cena);
-            statement.setDouble(4, zvyhodnenaCena);
-            statement.setInt(5, kapacita);
-            statement.setString(6, popis);
-            statement.setInt(7, idOrganizator);
+            statement.setString(1, zakaznik);
+            statement.setInt(2, zvyhodneni);
+            statement.setInt(3, idEvent);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+    //stejná metoda pro registrovaného zákazníka, detaily zákazníka pak ideálně řešit přes sql JOIN
+    public static void databazeInsertNewListek(int zvyhodneni, int idEvent, int idOsoba) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO listek (zvyhodneni, id_event, id_osoba) VALUES (?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, zvyhodneni);
+            statement.setInt(2, idEvent);
+            statement.setInt(3, idOsoba);
+
 
             statement.execute();
 
@@ -128,7 +181,7 @@ public class Databaze {
     private static Connection getDBConn(){
         Connection connection = null;
         try {
-            //          Otevreni komunikace do databaze
+            //Otevreni komunikace do databaze
             Class.forName(DB_DRIVER);
             connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
         }
