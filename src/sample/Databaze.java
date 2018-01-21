@@ -12,39 +12,37 @@ public class Databaze {
     private static final String dbConnection = "jdbc:mysql://localhost:8889/jdbc_db";
     private static final String dbUser = "root";
     private static final String dbPassword = "root";
-//
-//    /**
-//     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
-//     * -> rs.close();
-//     * @param parametr SQL příkaz
-//     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
-//     *              username, email nebo název eventu
-//     * @return result set z databáze podle parametru
-//     */
-//    public ResultSet databazeGET(String parametr, String... udaje) {
-//        Connection connection = getDBConn();
-//        PreparedStatement statement = null;
-//        ResultSet rs = null;
-//        try {
-//            statement = connection.prepareStatement(parametr);
-//            int i = 1;
-//            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
-//            for (String udaj : udaje) {
-//                statement.setString(i,udaj);
-//                i++;
-//            }
-//            rs = statement.executeQuery();
-//
-//            statement.close();
-//            connection.close();
-//
-//        } catch (SQLException | NullPointerException ex) {
-//            databazeChybaPripojeniAlert(ex);
-//        } finally {
-//            finallyBlockDatabazovaFunkce(statement, connection);
-//        }
-//        return rs;
-//    }
+
+    /**
+     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
+     * -> rs.close();
+     * @param parametr SQL příkaz
+     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
+     *              username, email nebo název eventu
+     * @return result set z databáze podle parametru
+     */
+    public ResultSet databazeGET(String parametr, String... udaje) {
+        Connection connection = getDBConn();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(parametr);
+            int i = 1;
+            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
+            for (String udaj : udaje) {
+                statement.setString(i,udaj);
+                i++;
+            }
+            rs = statement.executeQuery();
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException | NullPointerException ex) {
+            alertException(ex);
+        }
+        return rs;
+    }
 
 
 
@@ -152,7 +150,59 @@ public class Databaze {
         }
     }
 
-    public static void databazeInsertNewUser(String jmeno, String email, String username, String heslo) {
+    public static void databazeInsertNewMisto(String nazev, String adresa, String email, int telefon) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO misto (nazev, adresa, email, telefon) VALUES (?, ?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setString(1, nazev);
+            statement.setString(2, adresa);
+            statement.setString(3, email);
+            statement.setInt(4, telefon);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+
+
+    public static void databazeInsertNewOrganizator(String jmeno, String email, int telefon) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO organizator (jmeno, email, telefon) VALUES (?, ?, ?)";
+
+            //statement a zaplnění parametry metody, status je vždy uzivatel
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setString(1, jmeno);
+            statement.setString(2, email);
+            statement.setInt(3, telefon);;
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+
+
+    public static void databazeInsertNewOsoba(String jmeno, String email, String username, String heslo) {
         try {
             //připojení k databázi
             Connection connection = getDBConn();

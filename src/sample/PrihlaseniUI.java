@@ -77,7 +77,7 @@ public class PrihlaseniUI {
             stage.setScene(scene);
         });
         registerButton.setOnMouseClicked(event -> {
-            Databaze.databazeInsertNewUser(getRegisterName().getText() + " " + getRegisterSurname().getText(),
+            Databaze.databazeInsertNewOsoba(getRegisterName().getText() + " " + getRegisterSurname().getText(),
                     getRegisterEmail().getText(), getRegisterUsername().getText(), getRegisterPassword().getText());
         });
 
