@@ -14,18 +14,21 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private Button showEvent = new Button();
     private Stage mainStage = new Stage();
+    private ProfilUI profilUI = new ProfilUI();
     private PrihlaseniUI prihlaseniUI = new PrihlaseniUI();
     private SeznamEventuUI seznamEventuUI = new SeznamEventuUI();
     private SeznamHistorieUI seznamHistorieUI = new SeznamHistorieUI();
     private SeznamRecenzeUI seznamRecenzeUI = new SeznamRecenzeUI();
     private SeznamOrganizatorUI seznamOrganizatorUI = new SeznamOrganizatorUI();
     private SeznamMistoUI seznamMistoUI = new SeznamMistoUI();
+    private SeznamAdminUI seznamAdminUI = new SeznamAdminUI();
+    private PridatAdminaUI pridatAdminaUI = new PridatAdminaUI();
     private PridatOrganizatoraUI pridatOrganizatoraUI = new PridatOrganizatoraUI();
     private PridatEventUI pridatEventUI = new PridatEventUI();
     private PridatMistoUI pridatMistoUI = new PridatMistoUI();
     //neregistrovaný
+    private Button guestShowEvent = new Button();
     private Scene guestScene;
     private BorderPane guestBorderPane = new BorderPane();
     private Label guestTitleLabel = new Label();
@@ -34,6 +37,7 @@ public class Main extends Application {
     private VBox guestCenterVbox = new VBox();
 
     //registrovaný
+    private Button registredShowEvent = new Button();
     private Scene registredScene;
     private BorderPane registredBorderPane = new BorderPane();
     private Button registredHistory = new Button();
@@ -62,8 +66,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         mainStage = primaryStage;
-        showEvent.setText("Eventy");
-        showEvent.setPrefWidth(150);
 
         uiNeregistrovany();
         uiRegistrovany();
@@ -75,7 +77,11 @@ public class Main extends Application {
             prihlaseniUI.nactiUI(mainStage, this);
         });
 
-        showEvent.setOnMouseClicked(event -> {
+        guestShowEvent.setOnMouseClicked(event -> {
+            seznamEventuUI.nactiUI(mainStage, this);
+        });
+
+        registredShowEvent.setOnMouseClicked(event -> {
             seznamEventuUI.nactiUI(mainStage, this);
         });
 
@@ -85,6 +91,14 @@ public class Main extends Application {
 
         registredReview.setOnMouseClicked(event -> {
             seznamRecenzeUI.nactiUI(mainStage, this);
+        });
+
+        registredProfileButton.setOnMouseClicked(event -> {
+            profilUI.nactiUI(mainStage, this);
+        });
+
+        registredLogoutButton.setOnMouseClicked(event -> {
+            mainStage.setScene(guestScene);
         });
 
         adminShowOrganizer.setOnMouseClicked(event -> {
@@ -102,9 +116,17 @@ public class Main extends Application {
         adminShowPlace.setOnMouseClicked(event -> {
             seznamMistoUI.nactiUI(mainStage, this);
         });
+        adminAddAdmin.setOnMouseClicked(event -> {
+            pridatAdminaUI.nactiUI(mainStage, this);
+        });
+        adminShowAdmin.setOnMouseClicked(event -> {
+            seznamAdminUI.nactiUI(mainStage, this);
+        });
     }
 
     private void uiNeregistrovany(){
+        guestShowEvent.setText("Eventy");
+        guestShowEvent.setPrefWidth(150);
         guestLoginButton.setText("Login");
         guestLoginButton.setPrefWidth(150);
         guestTopHbox.setPadding(new Insets(20));
@@ -117,7 +139,7 @@ public class Main extends Application {
         guestTopHbox.setAlignment(Pos.BASELINE_RIGHT);
         guestTopHbox.getChildren().add(guestLoginButton);
 
-        guestCenterVbox.getChildren().addAll(guestTitleLabel,showEvent);
+        guestCenterVbox.getChildren().addAll(guestTitleLabel,guestShowEvent);
         guestCenterVbox.setAlignment(Pos.CENTER);
         guestCenterVbox.setSpacing(200);
         guestScene = new Scene(guestBorderPane, 1200, 720);
@@ -125,7 +147,9 @@ public class Main extends Application {
     }
 
     private void uiRegistrovany(){
-        registredProfileButton.setText("Profil");
+        registredShowEvent.setText("Eventy");
+        registredShowEvent.setPrefWidth(150);
+        registredProfileButton.setText("Zde bude jméno a body");
         registredProfileButton.setPrefWidth(150);
         registredLogoutButton.setText("Odhlásit");
         registredLogoutButton.setPrefWidth(150);
@@ -172,7 +196,7 @@ public class Main extends Application {
         adminShowAdmin.setPrefWidth(150);
         adminCenterButtonsVbox.getChildren().addAll(adminEventButtonHbox,adminOrganizerButtonHbox,adminPlaceButtonHbox,adminAdminButtonHbox);
         adminCenterButtonsVbox.setSpacing(10);
-        adminEventButtonHbox.getChildren().addAll(adminAddEvent,showEvent);
+        adminEventButtonHbox.getChildren().addAll(adminAddEvent,registredShowEvent);
         adminEventButtonHbox.setAlignment(Pos.CENTER);
         adminOrganizerButtonHbox.getChildren().addAll(adminAddOrganizer,adminShowOrganizer);
         adminOrganizerButtonHbox.setAlignment(Pos.CENTER);
