@@ -13,6 +13,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import sample.db.Databaze;
+import sample.db.Organizator;
 
 public class SeznamOrganizatorUI {
 
@@ -81,6 +83,8 @@ public class SeznamOrganizatorUI {
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecJmeno, sloupecTelefon, sloupecEmail);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        dataEventu.addAll(Databaze.getOrganizatori());
 
         return table;
     }

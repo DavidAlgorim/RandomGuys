@@ -13,6 +13,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import sample.db.Databaze;
+import sample.db.Misto;
 
 public class SeznamMistoUI {
 
@@ -85,6 +87,8 @@ public class SeznamMistoUI {
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecNazev, sloupecAdresa ,sloupecTelefon, sloupecEmail);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        dataEventu.addAll(Databaze.getMista());
 
         return table;
     }

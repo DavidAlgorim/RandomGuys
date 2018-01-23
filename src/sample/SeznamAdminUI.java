@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import sample.db.Admin;
 
 public class SeznamAdminUI {
 

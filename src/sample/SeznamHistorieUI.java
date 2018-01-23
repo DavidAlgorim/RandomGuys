@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.BooleanStringConverter;
+import sample.db.Listek;
 
 public class SeznamHistorieUI {
 

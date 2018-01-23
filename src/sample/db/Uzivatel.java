@@ -1,24 +1,23 @@
-package sample;
+package sample.db;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Uzivatel implements Zakaznik{
 
+    private int id;
     private String username;
-    private String email;
     private String jmeno;
+    private String email;
     private List<Listek> koupeneListky;
     private int bonusoveBody;
 
-    public Uzivatel(String username){
-        this.jmeno = getJmeno();
-        nactiUdajeUzivatele();
-    }
-
-    private void nactiUdajeUzivatele(){
-        // Zde se načtou údaje o uživateli (zbylé parametry) z DB podle jeho username
-        // Vše se bude týkat entity Uživatel, jen list koupených lístků bude muset být načten spojením s entitou Lístek
+    Uzivatel(int id, String username, String jmeno, String email, int bonusoveBody){
+        this.id = id;
+        this.username = username;
+        this.jmeno = jmeno;
+        this.email = email;
+        this.bonusoveBody = bonusoveBody;
     }
 
     public void pouzijBonusBody(Listek listek){

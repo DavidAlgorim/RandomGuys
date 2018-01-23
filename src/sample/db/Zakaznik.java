@@ -1,4 +1,4 @@
-package sample;
+package sample.db;
 
 public interface Zakaznik extends Osoba{
 

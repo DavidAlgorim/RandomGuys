@@ -1,8 +1,6 @@
-package sample;
+package sample.db;
 
-import org.mindrot.jbcrypt.BCrypt;
-
-public class Neregistrovany implements Zakaznik{
+public class Neregistrovany implements Zakaznik {
 
 
     public Neregistrovany(){ }
@@ -13,7 +11,7 @@ public class Neregistrovany implements Zakaznik{
 
 
         // Po vytvoření a zapsání do DB bude instance nově vzniklého uživatele vrácena metodou
-        return new Uzivatel(username);
+        return null;
     }
 
     @Override
