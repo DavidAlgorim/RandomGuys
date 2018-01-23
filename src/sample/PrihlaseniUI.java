@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
+import sample.db.*;
 
 public class PrihlaseniUI {
 
@@ -78,7 +79,7 @@ public class PrihlaseniUI {
 
             // Hashování hesla
             String hashed = BCrypt.hashpw(getRegisterPassword().getText(), BCrypt.gensalt());
-            Databaze.databazeInsertNewOsoba(getRegisterName().getText() + " " + getRegisterSurname().getText(),
+            Databaze.insertNewUzivatel(getRegisterName().getText() + " " + getRegisterSurname().getText(),
                     getRegisterEmail().getText(), getRegisterUsername().getText(), hashed);
 
 

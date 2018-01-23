@@ -1,4 +1,4 @@
-package sample;
+package sample.db;
 
 public class Listek {
 

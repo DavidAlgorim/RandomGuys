@@ -1,4 +1,4 @@
-package sample;
+package sample.db;
 
 // V class diagramu jako třída, ovšem interface Zakaznik by ji poté nemohl rozšiřovat
 public interface Osoba {
