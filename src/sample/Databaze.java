@@ -62,7 +62,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
-
+            rs.close();
 
         } catch (Exception e) {
             alertException(e);
@@ -87,6 +87,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
@@ -112,6 +113,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
@@ -137,6 +139,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
@@ -161,6 +164,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
@@ -185,6 +189,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
@@ -209,6 +214,7 @@ public class Databaze {
 
             statement.close();
             connection.close();
+            rs.close();
 
 
         } catch (Exception e) {
