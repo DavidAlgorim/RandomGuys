@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Databaze {
@@ -13,38 +14,208 @@ public class Databaze {
     private static final String dbUser = "root";
     private static final String dbPassword = "root";
 
-    /**
-     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
-     * -> rs.close();
-     * @param parametr SQL příkaz
-     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
-     *              username, email nebo název eventu
-     * @return result set z databáze podle parametru
-     */
-    public ResultSet databazeGET(String parametr, String... udaje) {
-        Connection connection = getDBConn();
-        PreparedStatement statement = null;
+//    /**
+//     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
+//     * -> rs.close();
+//     * @param parametr SQL příkaz
+//     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
+//     *              username, email nebo název eventu
+//     * @return result set z databáze podle parametru
+//     */
+//    public ResultSet databazeGET(String parametr, String... udaje) {
+//        Connection connection = getDBConn();
+//        PreparedStatement statement = null;
+//        ResultSet rs = null;
+//        try {
+//            statement = connection.prepareStatement(parametr);
+//            int i = 1;
+//            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
+//            for (String udaj : udaje) {
+//                statement.setString(i,udaj);
+//                i++;
+//            }
+//            rs = statement.executeQuery();
+//
+//            statement.close();
+//            connection.close();
+//
+//        } catch (SQLException | NullPointerException ex) {
+//            alertException(ex);
+//        }
+//        return rs;
+//    }
+
+    //všechny eventy
+    public static ResultSet databazeGetEvent() {
+
         ResultSet rs = null;
         try {
-            statement = connection.prepareStatement(parametr);
-            int i = 1;
-            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
-            for (String udaj : udaje) {
-                statement.setString(i,udaj);
-                i++;
-            }
-            rs = statement.executeQuery();
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM events";
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
 
             statement.close();
             connection.close();
 
-        } catch (SQLException | NullPointerException ex) {
-            alertException(ex);
+
+        } catch (Exception e) {
+            alertException(e);
         }
         return rs;
     }
 
+    //v parametru event, pro který hledáme hodnocení
+    public static ResultSet databazeGetHodnoceni(int idEvent) {
 
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM hodnoceni WHERE id_event = " + idEvent;
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
+
+    //parametr jméno neregistrovaného uživatele
+    public static ResultSet databazeGetListek(String zakaznik) {
+
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM listek WHERE zakaznik = " + zakaznik;
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
+
+    //overload, parametr id registrovaného
+    public static ResultSet databazeGetListek(int idOsoba) {
+
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM listek WHERE id_osoba = " + idOsoba;
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
+
+    public static ResultSet databazeGetMisto() {
+
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM misto";
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
+
+    public static ResultSet databazeGetOrganizator() {
+
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM organizator";
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
+
+    public static ResultSet databazeGetOsoba(int idOsoba) {
+
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM osoba WHERE id_osoba = " + idOsoba;
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return rs;
+    }
 
     public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {
         try {
