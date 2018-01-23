@@ -54,7 +54,7 @@ public class Databaze {
             Connection connection = getDBConn();
 
             //SELECT dotaz
-            String select = "SELECT * FROM events";
+            String select = "SELECT * FROM event";
 
             Statement statement = connection.createStatement();
 
