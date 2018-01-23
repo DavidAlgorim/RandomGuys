@@ -89,7 +89,7 @@ CREATE TABLE `misto` (
   `id_misto` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nazev` varchar(255) NOT NULL DEFAULT '',
   `adresa` varchar(255) NOT NULL DEFAULT '',
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `username` varchar(255) NOT NULL DEFAULT '',
   `telefon` int(11) NOT NULL,
   PRIMARY KEY (`id_misto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `organizator`;
 CREATE TABLE `organizator` (
   `id_organizator` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `jmeno` varchar(255) NOT NULL DEFAULT '',
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `username` varchar(255) NOT NULL DEFAULT '',
   `telefon` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_organizator`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -119,7 +119,7 @@ DROP TABLE IF EXISTS `osoba`;
 CREATE TABLE `osoba` (
   `id_osoba` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `jmeno` varchar(255) NOT NULL DEFAULT '',
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `username` varchar(255) NOT NULL DEFAULT '',
   `username` varchar(100) NOT NULL DEFAULT '',
   `pass_hash` varchar(100) NOT NULL DEFAULT '',
   `status` varchar(255) NOT NULL DEFAULT '',
@@ -130,7 +130,7 @@ CREATE TABLE `osoba` (
 LOCK TABLES `osoba` WRITE;
 /*!40000 ALTER TABLE `osoba` DISABLE KEYS */;
 
-INSERT INTO `osoba` (`id_osoba`, `jmeno`, `email`, `username`, `pass_hash`, `status`, `body`)
+INSERT INTO `osoba` (`id_osoba`, `jmeno`, `username`, `username`, `pass_hash`, `status`, `body`)
 VALUES
 	(6,'Svátík Efko','yuyy@yuyyy.com','deepSpace69','696969','uzivatel',0);
 

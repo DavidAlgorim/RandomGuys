@@ -1,8 +1,11 @@
 package sample;
 
 import javafx.scene.control.Alert;
+import sun.misc.Version;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Databaze {
 
@@ -238,16 +241,65 @@ public class Databaze {
             Statement statement = connection.createStatement();
 
             rs = statement.executeQuery(select);
-
             statement.close();
-            connection.close();
-            rs.close();
 
 
         } catch (Exception e) {
             alertException(e);
         }
         return rs;
+    }
+
+    public static String databazeGetHash(String username) {
+
+        String hash = "";
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM osoba WHERE username = \'" + username + "\'";
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+            while (rs.next()) {
+                hash = rs.getString("pass_hash");
+            }
+            statement.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return hash;
+    }
+
+    public static String databazeGetStatus(String username) {
+
+        String status = "";
+        ResultSet rs = null;
+        try {
+            //připojení k db
+            Connection connection = getDBConn();
+
+            //SELECT dotaz
+            String select = "SELECT * FROM osoba WHERE username = \'" + username + "\'";
+
+            Statement statement = connection.createStatement();
+
+            rs = statement.executeQuery(select);
+            while (rs.next()) {
+                status = rs.getString("status");
+            }
+            statement.close();
+
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+        return status;
     }
 
     public static void databazeInsertNewEvent(String nazev, int idMisto, double cena, double zvyhodnenaCena, int kapacita, String popis, int idOrganizator) {

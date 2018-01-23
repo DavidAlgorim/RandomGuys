@@ -1,49 +1,43 @@
 package sample;
 
+import javafx.scene.control.Alert;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public final class Prihlaseni {
 
+    private static String hash = "";
+    private static String status = "";
+
     public static Osoba prihlasitSe(String username, String heslo){
 
-//        String hash = "";
-//        try {
-//            ResultSet rs = new Databaze().databazeGET("SELECT pass_hash FROM osoba WHERE username = ?",
-//                    username);
-//            if(rs == null)
-//                return null;
-//            hash = rs.getString(1);
-//            rs.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        if(BCrypt.checkpw(heslo, hash)) {
-//            System.out.println("Uživatel přihlášen");
-//            String status = "";
-//            try{
-//                ResultSet rs = new Databaze().databazeGET("SELECT status FROM osoba WHERE username = ?",
-//                        username);
-//                status = rs.getString(1);
-//                rs.close();
-//            } catch (SQLException e){
-//                e.printStackTrace();
-//            }
-//            switch(status){
-//                case "spravce":
-//                    return new Spravce(username);
-//                case "admin":
-//                    return new Admin(username);
-//                case "uzivatel":
-//                default:
-//                    return new Uzivatel(username);
-//            }
-//        } else {
-//            System.out.println("Špatné jméno nebo heslo");
-//            return null;
-//        }
-        return null;
+        hash = Databaze.databazeGetHash(username);
+        status = Databaze.databazeGetStatus(username);
+
+
+        if(BCrypt.checkpw(heslo, hash)) {
+            switch (status) {
+                case "spravce":
+                    System.out.println("správce potvrzen");
+                    return new Spravce(username);
+                case "admin":
+                    System.out.println("admin potvrzen");
+                    return new Admin(username);
+                case "uzivatel":
+                default:
+                    System.out.println("uživatel potvrzen");
+                    return new Uzivatel(username);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Chyba přihlášení!");
+            alert.setContentText("Chybné uživatelské jméno nebo heslo!");
+            alert.showAndWait();
+            return null;
+        }
     }
 
 }
