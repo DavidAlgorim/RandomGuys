@@ -15,6 +15,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class SeznamEventuUI {
 
     private TableColumn<Event, String> sloupecNazev;
@@ -103,7 +106,21 @@ public class SeznamEventuUI {
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecNazev, sloupecOrganizator, sloupecMisto, sloupecCena, sloupecHodnoceni);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        nactiZDB();
+
         return table;
+    }
+
+    private void nactiZDB(){
+        ResultSet rs = Databaze.databazeGETbyString("SELECT nazev FROM event");
+        try {
+            while(rs.next()){
+                dataEventu.add(new Event(rs.getString("nazev")));
+            }
+        } catch(SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+        }
     }
 
 }

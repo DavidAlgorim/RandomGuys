@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 
 
 public class Event {
@@ -16,8 +15,6 @@ public class Event {
     private int zvyhodnenaCena;
     private int kapacita;
     private String popis;
-    
-    private ObservableList<Event> dataEventy;
     
     
     // Konstruktor pro nově vytvářený event
@@ -35,23 +32,23 @@ public class Event {
     // Konstruktor pro zobrazování už vzniklého eventu
     public Event(String nazev){
         this.nazev = nazev;
-        ResultSet rs = null;
-        nactiUdajeEventu(rs);
+        nactiUdajeEventu();
     }
 
-    private void nactiUdajeEventu(ResultSet rs){
+    private void nactiUdajeEventu(){
+        ResultSet rs = Databaze.databazeGETbyString("SELECT * FROM event WHERE nazev = ?",nazev);
         try {
             while (rs.next()) {
-                String nazev = rs.getString("nazev");
-                Organizator organizator  = getOrganizator();
-                Misto misto = getMisto();
-                int cena = rs.getInt("cena");
-                int zvyhodnenaCena = rs.getInt("zvyhodnenaCena");
-                int kapacita = rs.getInt("kapacita");
-                String popis = rs.getString("popis");
-
-                dataEventy.add(new Event(nazev, organizator, misto, cena, zvyhodnenaCena, kapacita, popis));
-
+                nazev = rs.getString("nazev");
+                organizator = new Organizator(Databaze.databazeGETbyString("SELECT id_organizator FROM event "+
+                        "WHERE nazev = ?",nazev).getInt("id_organizator"));
+                misto = new Misto(Databaze.databazeGETbyString("SELECT id_misto FROM event WHERE nazev = ?",
+                        nazev).getInt("id_misto"));
+                cena = rs.getInt("cena");
+                zvyhodnenaCena = rs.getInt("zvyhodnena_cena");
+                kapacita = rs.getInt("kapacita");
+                popis = rs.getString("popis");
+                rs.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Event.class.getName()).log(Level.SEVERE, null, ex);

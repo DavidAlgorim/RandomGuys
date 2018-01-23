@@ -1,10 +1,7 @@
 package sample;
 
-import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import org.mindrot.jbcrypt.BCrypt;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Databaze {
@@ -14,36 +11,66 @@ public class Databaze {
     private static final String dbUser = "root";
     private static final String dbPassword = "root";
 
-//    /**
-//     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
-//     * -> rs.close();
-//     * @param parametr SQL příkaz
-//     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
-//     *              username, email nebo název eventu
-//     * @return result set z databáze podle parametru
-//     */
-//    public ResultSet databazeGET(String parametr, String... udaje) {
-//        Connection connection = getDBConn();
-//        PreparedStatement statement = null;
-//        ResultSet rs = null;
-//        try {
-//            statement = connection.prepareStatement(parametr);
-//            int i = 1;
-//            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
-//            for (String udaj : udaje) {
-//                statement.setString(i,udaj);
-//                i++;
-//            }
-//            rs = statement.executeQuery();
-//
-//            statement.close();
-//            connection.close();
-//
-//        } catch (SQLException | NullPointerException ex) {
-//            alertException(ex);
-//        }
-//        return rs;
-//    }
+    /**
+     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
+     * -> rs.close();
+     * @param parametr SQL příkaz
+     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (většinou se bude jednat o jeden - např.
+     *              username, email nebo název eventu
+     * @return result set z databáze podle parametru
+     */
+    public static ResultSet databazeGETbyString(String parametr, String... udaje) {
+        Connection connection = getDBConn();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(parametr);
+            int i = 1;
+            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
+            for (String udaj : udaje) {
+                statement.setString(i,udaj);
+                i++;
+            }
+            rs = statement.executeQuery();
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException | NullPointerException ex) {
+            alertException(ex);
+        }
+        return rs;
+    }
+
+    /**
+     * Vrací údaje z databáze podle zadaného parametru (SQL příkazu). Po načtení údaju z ResultSet musí být uzavřen!!
+     * -> rs.close();
+     * @param parametr SQL příkaz
+     * @param udaje údaje, podle kterých může být vyhledán záznam v databázi (jedná se o int, takže to bude nejspíš id)
+     * @return result set z databáze podle parametru
+     */
+    public static ResultSet databazeGETbyInt(String parametr, int... udaje) {
+        Connection connection = getDBConn();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(parametr);
+            int i = 1;
+            // Pokud není metodě předán žádný údaj, cyklus neproběhne ani jednou
+            for (int udaj : udaje) {
+                statement.setInt(i,udaj);
+                i++;
+            }
+            rs = statement.executeQuery();
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException | NullPointerException ex) {
+            alertException(ex);
+        }
+        return rs;
+    }
 
     //všechny eventy
     public static ResultSet databazeGetEvent() {
