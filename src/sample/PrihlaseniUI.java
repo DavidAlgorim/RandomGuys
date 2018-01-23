@@ -14,8 +14,8 @@ import org.mindrot.jbcrypt.BCrypt;
 public class PrihlaseniUI {
 
     private Scene scene;
-    private TextField email = new TextField();
-    private Label emailLabel = new Label();
+    private TextField username = new TextField();
+    private Label usernameLabel = new Label();
     private TextField password = new TextField();
     private Label passwordLabel = new Label();
     private BorderPane borderPane = new BorderPane();
@@ -102,8 +102,8 @@ public class PrihlaseniUI {
 
 
     public void prihlasovani(){
-        // Pracoval bych spíše s username, takže jen všude nahradit email za username
-        Osoba uzivatel = Prihlaseni.prihlasitSe(getEmail().getText(), getPassword().getText());
+        // Pracoval bych spíše s username, takže jen všude nahradit username za username
+        Osoba uzivatel = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
         if(uzivatel instanceof Uzivatel){
             // Zobrazit UI pro přihlášené
         }
@@ -136,10 +136,10 @@ public class PrihlaseniUI {
             centerVbox.setSpacing(10);
             centerVbox.setAlignment(Pos.CENTER);
             centerVbox.setMaxWidth(220);
-            emailHbox.getChildren().addAll(emailLabel, getEmail());
+            emailHbox.getChildren().addAll(usernameLabel, getUsername());
             passwordHbox.getChildren().addAll(passwordLabel, getPassword());
-            emailLabel.setText("Email:  ");
-            emailLabel.setPrefWidth(70);
+            usernameLabel.setText("Email:  ");
+            usernameLabel.setPrefWidth(70);
             passwordLabel.setText("Heslo:  ");
             passwordLabel.setPrefWidth(70);
             loginBackButton.setText("Zpět");
@@ -187,12 +187,12 @@ public class PrihlaseniUI {
         }
     }
 
-    public TextField getEmail() {
-        return email;
+    public TextField getUsername() {
+        return username;
     }
 
-    public void setEmail(TextField email) {
-        this.email = email;
+    public void setUsername(TextField username) {
+        this.username = username;
     }
 
     public TextField getPassword() {
