@@ -1,11 +1,12 @@
 package sample;
 
+import javafx.collections.ObservableList;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 
 public class Spravce implements Osoba{
 
@@ -63,7 +64,7 @@ public class Spravce implements Osoba{
     }
 
 
-    public Misto pridejMisto(String nazev, String[] adresa, String email, String telefon){
+    public Misto pridejMisto(String nazev, String adresa, String email, String telefon){
         // Zapsání nového místa do DB
 
         return new Misto(nazev, adresa, email, telefon);

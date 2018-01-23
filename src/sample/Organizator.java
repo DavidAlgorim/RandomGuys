@@ -24,6 +24,7 @@ public class Organizator {
             jmeno = rs.getString("jmeno");
             email = rs.getString("email");
             telefon = rs.getString("telefon");
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Event.class.getName()).log(Level.SEVERE, null, ex);
         }

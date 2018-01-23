@@ -117,6 +117,7 @@ public class SeznamEventuUI {
         try {
             while(rs.next()){
                 dataEventu.add(new Event(rs.getInt("id_event")));
+                rs.close();
             }
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
