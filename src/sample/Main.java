@@ -20,6 +20,9 @@ public class Main extends Application {
     private SeznamEventuUI seznamEventuUI = new SeznamEventuUI();
     private SeznamHistorieUI seznamHistorieUI = new SeznamHistorieUI();
     private SeznamRecenzeUI seznamRecenzeUI = new SeznamRecenzeUI();
+    private SeznamOrganizatorUI seznamOrganizatorUI = new SeznamOrganizatorUI();
+    private PridatOrganizatoraUI pridatOrganizatoraUI = new PridatOrganizatoraUI();
+    private PridatEventUI pridatEventUI = new PridatEventUI();
     //neregistrovaný
     private Scene guestScene;
     private BorderPane guestBorderPane = new BorderPane();
@@ -81,6 +84,16 @@ public class Main extends Application {
         registredReview.setOnMouseClicked(event -> {
             seznamRecenzeUI.nactiUI(mainStage, this);
         });
+
+        adminShowOrganizer.setOnMouseClicked(event -> {
+            seznamOrganizatorUI.nactiUI(mainStage, this);
+        });
+        adminAddOrganizer.setOnMouseClicked(event -> {
+            pridatOrganizatoraUI.nactiUI(mainStage,this);
+        });
+        adminAddEvent.setOnMouseClicked(event -> {
+            pridatEventUI.nactiUI(mainStage, this);
+        });
     }
 
     private void uiNeregistrovany(){
@@ -124,15 +137,17 @@ public class Main extends Application {
         registredTopVbox.setSpacing(10);
 
         //if (user je přihlášen && není admin)
-        registredCenterVbox.getChildren().addAll(registredTitleLabel, registredCenterButtonsVbox);
+        /*registredCenterVbox.getChildren().addAll(registredTitleLabel, registredCenterButtonsVbox);
         registredCenterVbox.setAlignment(Pos.CENTER);
         registredCenterVbox.setSpacing(200);
 
         registredCenterButtonsVbox.getChildren().addAll(showEvent, registredHistory, registredReview);
         registredCenterButtonsVbox.setAlignment(Pos.CENTER);
-        registredCenterButtonsVbox.setSpacing(10);
-        /*else if (user je přihlášen && je admin)
+        registredCenterButtonsVbox.setSpacing(10);*/
+        //else if (user je přihlášen && je admin)
         registredCenterVbox.getChildren().addAll(registredTitleLabel, adminCenterButtonsVbox);
+        registredCenterVbox.setAlignment(Pos.CENTER);
+        registredCenterVbox.setSpacing(200);
         adminAddEvent.setText("Přidat event");
         adminAddEvent.setPrefWidth(150);
         adminAddOrganizer.setText("Přidat organizátora");
@@ -156,7 +171,7 @@ public class Main extends Application {
         adminPlaceButtonHbox.getChildren().addAll(adminAddPlace,adminShowPlace);
         adminPlaceButtonHbox.setAlignment(Pos.CENTER);
         adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
-        adminAdminButtonHbox.setAlignment(Pos.CENTER);*/
+        adminAdminButtonHbox.setAlignment(Pos.CENTER);
 
 
 
