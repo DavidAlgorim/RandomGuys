@@ -13,15 +13,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.converter.BooleanStringConverter;
 
 public class SeznamHistorieUI {
 
-    private TableColumn<Event, String> sloupecNazev;
-    private TableColumn<Event, String> sloupecOrganizator;
-    private TableColumn<Event, String> sloupecMisto;
-    private TableColumn<Event, String> sloupecCena;
-    private TableView<Event> table;
-    private ObservableList<Event> dataEventu;
+    private TableColumn<Listek, String> sloupecEvent;
+    private TableColumn<Listek, Boolean> sloupecZvyhodneny;
+    private TableView<Listek> table;
+    private ObservableList<Listek> dataEventu;
 
     private Scene scene;
     private BorderPane borderPane = new BorderPane();
@@ -58,33 +57,25 @@ public class SeznamHistorieUI {
         }
     }
 
-    private TableView<Event> vytvorTabulku() {
-        table = new TableView<Event>();
+    private TableView<Listek> vytvorTabulku() {
+        table = new TableView<Listek>();
         dataEventu = FXCollections.observableArrayList();
 
         table.setEditable(true);
 
-        sloupecNazev = new TableColumn("Název");
-        sloupecNazev.setPrefWidth(110);
-        sloupecOrganizator = new TableColumn("Organizátor");
-        sloupecOrganizator.setPrefWidth(130);
-        sloupecMisto = new TableColumn("Místo");
-        sloupecMisto.setPrefWidth(130);
-        sloupecCena = new TableColumn("Cena");
-        sloupecCena.setPrefWidth(130);
+        sloupecEvent = new TableColumn("Event");
+        sloupecEvent.setPrefWidth(130);
+        sloupecZvyhodneny = new TableColumn("Zvýhodněný");
+        sloupecZvyhodneny.setPrefWidth(130);
 
-        sloupecNazev.setCellValueFactory(new PropertyValueFactory<Event, String>("nazev"));
-        sloupecOrganizator.setCellValueFactory(new PropertyValueFactory<Event, String>("organizator"));
-        sloupecMisto.setCellValueFactory(new PropertyValueFactory<Event, String>("misto"));
-        sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, String>("cena"));
+        sloupecEvent.setCellValueFactory(new PropertyValueFactory<Listek, String>("event"));
+        sloupecZvyhodneny.setCellValueFactory(new PropertyValueFactory<Listek, Boolean>("zvyhodneny"));
 
-        sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecOrganizator.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecMisto.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecEvent.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecZvyhodneny.setCellFactory(TextFieldTableCell.<Listek, Boolean>forTableColumn(new BooleanStringConverter()));
 
         table.setItems(dataEventu);
-        table.getColumns().addAll(sloupecNazev, sloupecOrganizator, sloupecMisto, sloupecCena);
+        table.getColumns().addAll(sloupecEvent, sloupecZvyhodneny);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return table;
     }

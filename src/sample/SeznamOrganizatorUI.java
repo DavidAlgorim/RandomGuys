@@ -16,11 +16,11 @@ import javafx.stage.Stage;
 
 public class SeznamOrganizatorUI {
 
-    private TableColumn<Event, String> sloupecJmeno;
-    private TableColumn<Event, String> sloupecTelefon;
-    private TableColumn<Event, String> sloupecEmail;
-    private TableView<Event> table;
-    private ObservableList<Event> dataEventu;
+    private TableColumn<Organizator, String> sloupecJmeno;
+    private TableColumn<Organizator, String> sloupecTelefon;
+    private TableColumn<Organizator, String> sloupecEmail;
+    private TableView<Organizator> table;
+    private ObservableList<Organizator> dataEventu;
 
     private Scene scene;
     private BorderPane borderPane = new BorderPane();
@@ -57,8 +57,8 @@ public class SeznamOrganizatorUI {
         }
     }
 
-    private TableView<Event> vytvorTabulku() {
-        table = new TableView<Event>();
+    private TableView<Organizator> vytvorTabulku() {
+        table = new TableView<Organizator>();
         dataEventu = FXCollections.observableArrayList();
 
         table.setEditable(true);
@@ -70,9 +70,9 @@ public class SeznamOrganizatorUI {
         sloupecEmail = new TableColumn("Email");
         sloupecEmail.setPrefWidth(130);
 
-        sloupecJmeno.setCellValueFactory(new PropertyValueFactory<Event, String>("jmeno"));
-        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Event, String>("telefon"));
-        sloupecEmail.setCellValueFactory(new PropertyValueFactory<Event, String>("email"));
+        sloupecJmeno.setCellValueFactory(new PropertyValueFactory<Organizator, String>("jmeno"));
+        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, String>("telefon"));
+        sloupecEmail.setCellValueFactory(new PropertyValueFactory<Organizator, String>("email"));
 
         sloupecJmeno.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn());
