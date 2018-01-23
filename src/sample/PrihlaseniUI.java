@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class PrihlaseniUI {
 
@@ -77,8 +78,18 @@ public class PrihlaseniUI {
             stage.setScene(scene);
         });
         registerButton.setOnMouseClicked(event -> {
+
+            // Hashování hesla
+            String hashed = BCrypt.hashpw(getRegisterPassword().getText(), BCrypt.gensalt());
             Databaze.databazeInsertNewOsoba(getRegisterName().getText() + " " + getRegisterSurname().getText(),
-                    getRegisterEmail().getText(), getRegisterUsername().getText(), getRegisterPassword().getText());
+                    getRegisterEmail().getText(), getRegisterUsername().getText(), hashed);
+
+
+            getRegisterName().clear();
+            getRegisterSurname().clear();
+            getRegisterUsername().clear();
+            getRegisterEmail().clear();
+            getRegisterPassword().clear();
         });
 
         loginBackButton.setOnMouseClicked(event -> {
