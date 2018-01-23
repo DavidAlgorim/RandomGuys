@@ -21,8 +21,10 @@ public class Main extends Application {
     private SeznamHistorieUI seznamHistorieUI = new SeznamHistorieUI();
     private SeznamRecenzeUI seznamRecenzeUI = new SeznamRecenzeUI();
     private SeznamOrganizatorUI seznamOrganizatorUI = new SeznamOrganizatorUI();
+    private SeznamMistoUI seznamMistoUI = new SeznamMistoUI();
     private PridatOrganizatoraUI pridatOrganizatoraUI = new PridatOrganizatoraUI();
     private PridatEventUI pridatEventUI = new PridatEventUI();
+    private PridatMistoUI pridatMistoUI = new PridatMistoUI();
     //neregistrovaný
     private Scene guestScene;
     private BorderPane guestBorderPane = new BorderPane();
@@ -93,6 +95,12 @@ public class Main extends Application {
         });
         adminAddEvent.setOnMouseClicked(event -> {
             pridatEventUI.nactiUI(mainStage, this);
+        });
+        adminAddPlace.setOnMouseClicked(event -> {
+            pridatMistoUI.nactiUI(mainStage, this);
+        });
+        adminShowPlace.setOnMouseClicked(event -> {
+            seznamMistoUI.nactiUI(mainStage, this);
         });
     }
 
