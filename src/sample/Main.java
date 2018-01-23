@@ -18,6 +18,8 @@ public class Main extends Application {
     private Stage mainStage = new Stage();
     private PrihlaseniUI prihlaseniUI = new PrihlaseniUI();
     private SeznamEventuUI seznamEventuUI = new SeznamEventuUI();
+    private SeznamHistorieUI seznamHistorieUI = new SeznamHistorieUI();
+    private SeznamRecenzeUI seznamRecenzeUI = new SeznamRecenzeUI();
     //neregistrovaný
     private Scene guestScene;
     private BorderPane guestBorderPane = new BorderPane();
@@ -59,6 +61,7 @@ public class Main extends Application {
         showEvent.setPrefWidth(150);
 
         uiNeregistrovany();
+        uiRegistrovany();
 
         mainStage.setTitle("RandomGuys");
         mainStage.show();
@@ -69,6 +72,14 @@ public class Main extends Application {
 
         showEvent.setOnMouseClicked(event -> {
             seznamEventuUI.nactiUI(mainStage, this);
+        });
+
+        registredHistory.setOnMouseClicked(event -> {
+            seznamHistorieUI.nactiUI(mainStage, this);
+        });
+
+        registredReview.setOnMouseClicked(event -> {
+            seznamRecenzeUI.nactiUI(mainStage, this);
         });
     }
 
@@ -156,9 +167,9 @@ public class Main extends Application {
     public void zobrazMainMenuUI(){
         //vytvoří se podmínka pro
         //if (user login) -> zobrazí UI pro registrovaného
-        //mainStage.setScene(registredScene);
+        mainStage.setScene(registredScene);
         //else if (!user login) -> zobrazí UI pro neregistrovaného
-        mainStage.setScene(guestScene);
+        //mainStage.setScene(guestScene);
     }
 
 
