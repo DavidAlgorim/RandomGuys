@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 public class Event {
 
+    private int id;
     private String nazev;
     private Organizator organizator;
     private Misto misto;
@@ -30,20 +31,18 @@ public class Event {
     }
     
     // Konstruktor pro zobrazování už vzniklého eventu
-    public Event(String nazev){
-        this.nazev = nazev;
+    public Event(int id){
+        this.id = id;
         nactiUdajeEventu();
     }
 
     private void nactiUdajeEventu(){
-        ResultSet rs = Databaze.databazeGETbyString("SELECT * FROM event WHERE nazev = ?",nazev);
+        ResultSet rs = Databaze.databazeGETbyInt("SELECT * FROM event WHERE id_event = ?",id);
         try {
             while (rs.next()) {
                 nazev = rs.getString("nazev");
-                organizator = new Organizator(Databaze.databazeGETbyString("SELECT id_organizator FROM event "+
-                        "WHERE nazev = ?",nazev).getInt("id_organizator"));
-                misto = new Misto(Databaze.databazeGETbyString("SELECT id_misto FROM event WHERE nazev = ?",
-                        nazev).getInt("id_misto"));
+                organizator = new Organizator(rs.getInt("id_organizator"));
+                misto = new Misto(rs.getInt("id_misto"));
                 cena = rs.getInt("cena");
                 zvyhodnenaCena = rs.getInt("zvyhodnena_cena");
                 kapacita = rs.getInt("kapacita");

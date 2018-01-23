@@ -113,10 +113,10 @@ public class SeznamEventuUI {
     }
 
     private void nactiZDB(){
-        ResultSet rs = Databaze.databazeGETbyString("SELECT nazev FROM event");
+        ResultSet rs = Databaze.databazeGETbyInt("SELECT id_event FROM event");
         try {
             while(rs.next()){
-                dataEventu.add(new Event(rs.getString("nazev")));
+                dataEventu.add(new Event(rs.getInt("id_event")));
             }
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
