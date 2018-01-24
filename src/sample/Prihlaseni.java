@@ -12,6 +12,8 @@ public final class Prihlaseni {
         String hash = Databaze.databazeGetHash(username);
 
         if(BCrypt.checkpw(heslo, hash)) {
+            System.out.println("Úspěšné přihlášení");
+
             return Databaze.getOsoba(username);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -1,6 +1,7 @@
 package sample.db;
 
 import javafx.scene.control.Alert;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ public class Databaze {
             statement = connection.prepareStatement("SELECT * FROM event WHERE id_event = ?");
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
-
-            event = new Event(id, rs.getString("nazev"),
-                    getOrganizator(rs.getInt("id_organizator")),
-                    getMisto(rs.getInt("id_misto")), rs.getInt("cena"),
-                    rs.getInt("zvyhodnena_cena"), rs.getInt("kapacita"),
-                    rs.getString("popis"));
-
+            while (rs.next()) {
+                event = new Event(id, rs.getString("nazev"),
+                        getOrganizator(rs.getInt("id_organizator")),
+                        getMisto(rs.getInt("id_misto")), rs.getInt("cena"),
+                        rs.getInt("zvyhodnena_cena"), rs.getInt("kapacita"),
+                        rs.getString("popis"));
+            }
             rs.close();
             statement.close();
             connection.close();
@@ -49,8 +50,10 @@ public class Databaze {
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
 
-            organizator = new Organizator(id, rs.getString("jmeno"), rs.getString("email"),
-                    rs.getInt("telefon"));
+            while (rs.next()) {
+                organizator = new Organizator(id, rs.getString("jmeno"), rs.getString("email"),
+                        rs.getInt("telefon"));
+            }
 
             rs.close();
             statement.close();
@@ -70,9 +73,10 @@ public class Databaze {
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
 
-            misto = new Misto(id, rs.getString("nazev"), rs.getString("adresa"),
-                    rs.getString("email"), rs.getInt("telefon"));
-
+            while (rs.next()) {
+                misto = new Misto(id, rs.getString("nazev"), rs.getString("adresa"),
+                        rs.getString("email"), rs.getInt("telefon"));
+            }
             rs.close();
             statement.close();
             connection.close();
@@ -221,22 +225,23 @@ public class Databaze {
             statement.setString(1,username);
             ResultSet rs = statement.executeQuery();
 
-            String status = rs.getString("status");
-            switch(status){
-                case "uzivatel":
-                    osoba = new Uzivatel(rs.getInt("id_osoba"),username,rs.getString("jmeno"),
-                            rs.getString("email"),rs.getInt("body"));
-                    break;
-                case "spravce":
-                    osoba = new Spravce(rs.getInt("id_osoba"),username,rs.getString("jmeno"),
-                            rs.getString("email"));
-                    break;
-                case "admin":
-                    osoba = new Admin(rs.getInt("id_osoba"),username,rs.getString("jmeno"),
-                            rs.getString("email"));
-                    break;
+            while (rs.next()) {
+                String status = rs.getString("status");
+                switch (status) {
+                    case "uzivatel":
+                        osoba = new Uzivatel(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
+                                rs.getString("email"), rs.getInt("body"));
+                        break;
+                    case "spravce":
+                        osoba = new Spravce(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
+                                rs.getString("email"));
+                        break;
+                    case "admin":
+                        osoba = new Admin(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
+                                rs.getString("email"));
+                        break;
+                }
             }
-
             rs.close();
             statement.close();
             connection.close();

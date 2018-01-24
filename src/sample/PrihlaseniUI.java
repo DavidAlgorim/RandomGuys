@@ -65,6 +65,7 @@ public class PrihlaseniUI {
 
 
         loginButton.setOnMouseClicked(event ->  {
+            Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
             prihlasovani();
         });
 
@@ -93,6 +94,8 @@ public class PrihlaseniUI {
             alert.setTitle("Success");
             alert.setHeaderText("Vaše registrace byla úspěšně potvrzena.");
             alert.showAndWait();
+
+            stage.setScene(scene);
         });
 
         loginBackButton.setOnMouseClicked(event -> {
@@ -107,12 +110,18 @@ public class PrihlaseniUI {
         Osoba uzivatel = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
         if(uzivatel instanceof Uzivatel){
             // Zobrazit UI pro přihlášené
+
+            main.zobrazMainMenuUI();
         }
         else if(uzivatel instanceof Spravce){
             // Zobrazit UI pro správce
+
+            main.zobrazMainMenuUI();
         }
         else if(uzivatel instanceof Admin){
             // Zobrazit UI pro admina
+
+            main.zobrazMainMenuUI();
         }
         else{
             // Zobrazit uživateli alert, že je chybné jméno nebo heslo
