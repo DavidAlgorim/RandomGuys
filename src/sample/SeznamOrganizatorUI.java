@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -13,13 +14,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Organizator;
 
 public class SeznamOrganizatorUI {
 
     private TableColumn<Organizator, String> sloupecJmeno;
-    private TableColumn<Organizator, String> sloupecTelefon;
+    private TableColumn<Organizator, Integer> sloupecTelefon;
     private TableColumn<Organizator, String> sloupecEmail;
     private TableView<Organizator> table;
     private ObservableList<Organizator> dataEventu;
@@ -71,13 +73,13 @@ public class SeznamOrganizatorUI {
         sloupecTelefon.setPrefWidth(130);
         sloupecEmail = new TableColumn("Email");
         sloupecEmail.setPrefWidth(130);
-
-        sloupecJmeno.setCellValueFactory(new PropertyValueFactory<Organizator, String>("jmeno"));
-        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, String>("telefon"));
-        sloupecEmail.setCellValueFactory(new PropertyValueFactory<Organizator, String>("email"));
-
+        
+        sloupecJmeno.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getJmeno()));
+        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, Integer>("cena"));
+        sloupecEmail.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEmail()));
+     
         sloupecJmeno.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         sloupecEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 
         table.setItems(dataEventu);
