@@ -281,7 +281,7 @@ public class Databaze {
 
     // Inserty
 
-    static void insertNewEvent(String nazev, int idMisto, int cena, int zvyhodnenaCena,
+    public static void insertNewEvent(String nazev, int idMisto, int cena, int zvyhodnenaCena,
                                               int kapacita, String popis, int idOrganizator) {
         Connection connection = getDBConn();
 

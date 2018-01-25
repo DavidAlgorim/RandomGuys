@@ -11,8 +11,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import sample.db.Databaze;
 import sample.db.Misto;
+import sample.db.Organizator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PridatEventUI {
 
@@ -24,8 +29,10 @@ public class PridatEventUI {
     private TextArea centerTextAreaPopis = new TextArea();
     private TextField centerTextAreaNazev = new TextField();
     private ComboBox<String> centerComboBoxOrganizator = new ComboBox();
+    private ObservableList<Organizator> listOrganizatoru;
     private ObservableList<String> seznamOrganizatoru;
     private ComboBox<String> centerComboBoxMisto = new ComboBox();
+    private List<Misto> listMist;
     private ObservableList<String> seznamMist;
     private TextField centerTextAreaCena = new TextField();
     private TextField centerTextAreaKapacita = new TextField();
@@ -67,6 +74,21 @@ public class PridatEventUI {
     private void vytvorScenu(){
         if (scene == null)
         {
+            //život by byl jednodušší bez milionu různých listů a jejich nekompatibilitou
+            listMist = FXCollections.observableList(Databaze.getMista());
+            seznamMist = FXCollections.observableArrayList();
+            for (Misto misto :
+                    listMist) {
+                seznamMist.add(misto.getNazev());
+            }
+
+            listOrganizatoru = FXCollections.observableList(Databaze.getOrganizatori());
+            seznamOrganizatoru = FXCollections.observableArrayList();
+            for (Organizator organizator :
+                    listOrganizatoru) {
+                seznamOrganizatoru.add(organizator.getJmeno());
+            }
+
             titleLabel.setText("Nový event");
             titleLabel.setFont(Font.font("Arial",32));
             topHbox.getChildren().add(titleLabel);
