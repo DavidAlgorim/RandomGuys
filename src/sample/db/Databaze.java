@@ -278,7 +278,7 @@ public class Databaze {
 
     // Inserty
 
-    static Event insertNewEvent(String nazev, int idMisto, int cena, int zvyhodnenaCena,
+    static void insertNewEvent(String nazev, int idMisto, int cena, int zvyhodnenaCena,
                                               int kapacita, String popis, int idOrganizator) {
         Connection connection = getDBConn();
 
@@ -301,26 +301,9 @@ public class Databaze {
         } catch (Exception e) {
             alertException(e);
         }
-
-        int eventId = 0;
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT id_event FROM event WHERE nazev = ?");
-            statement.setString(1,nazev);
-            ResultSet rs = statement.executeQuery();
-
-            eventId = rs.getInt("id_event");
-
-            rs.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException | NullPointerException ex) {
-            alertException(ex);
-        }
-
-        return getEvent(eventId);
     }
 
-    static Organizator insertNewOrganizator(String jmeno, String email, int telefon) {
+    public static void insertNewOrganizator(String jmeno, String email, int telefon) {
         Connection connection = getDBConn();
         try {
             String insert = "INSERT INTO organizator (jmeno, email, telefon) VALUES (?, ?, ?)";
@@ -336,27 +319,9 @@ public class Databaze {
         } catch (Exception e) {
             alertException(e);
         }
-
-        int organizatorId = 0;
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT id_organizator FROM organizator " +
-                    "WHERE jmeno = ?");
-            statement.setString(1,jmeno);
-            ResultSet rs = statement.executeQuery();
-
-            organizatorId = rs.getInt("id_organizator");
-
-            rs.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException | NullPointerException ex) {
-            alertException(ex);
-        }
-
-        return getOrganizator(organizatorId);
     }
 
-    public static Misto insertNewMisto(String nazev, String adresa, String email, int telefon) {
+    public static void insertNewMisto(String nazev, String adresa, String email, int telefon) {
         Connection connection = getDBConn();
         try {
             String insert = "INSERT INTO misto (nazev, adresa, email, telefon) VALUES (?, ?, ?, ?)";
@@ -373,24 +338,24 @@ public class Databaze {
         } catch (Exception e) {
             alertException(e);
         }
-
-        int mistoId = 0;
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT id_misto FROM misto WHERE " +
-                    "nazev = ?");
-            statement.setString(1,nazev);
-            ResultSet rs = statement.executeQuery();
-
-            mistoId = rs.getInt("id_misto");
-
-            rs.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException | NullPointerException ex) {
-            alertException(ex);
-        }
-
-        return getMisto(mistoId);
+//
+//        int mistoId = 0;
+//        try {
+//            PreparedStatement statement = connection.prepareStatement("SELECT id_misto FROM misto WHERE " +
+//                    "nazev = ?");
+//            statement.setString(1,nazev);
+//            ResultSet rs = statement.executeQuery();
+//
+//            mistoId = rs.getInt("id_misto");
+//
+//            rs.close();
+//            statement.close();
+//            connection.close();
+//        } catch (SQLException | NullPointerException ex) {
+//            alertException(ex);
+//        }
+//
+//        return getMisto(mistoId);
     }
 
 
