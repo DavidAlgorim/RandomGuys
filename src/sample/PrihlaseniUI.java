@@ -127,6 +127,7 @@ public class PrihlaseniUI {
             // Zobrazit UI pro správce
             System.out.println("spravce");
             spravce = (Spravce) osoba;
+            main.uiPodleUsera(null,spravce,null);
         }
     }
 
