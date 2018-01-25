@@ -25,6 +25,18 @@ import sample.db.Organizator;
 
 import javax.xml.soap.Text;
 import java.util.Observable;
+import java.util.Optional;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class SeznamEventuUI {
 
@@ -53,6 +65,7 @@ public class SeznamEventuUI {
         vytvorScenu();
         stage.setScene(scene);
         stage.show();
+        this.vyrobContextMenu();
 
         backButton.setOnMouseClicked(event -> {
             main.zobrazMainMenuUI();
@@ -119,6 +132,44 @@ public class SeznamEventuUI {
         dataEventu.addAll(Databaze.getEventy());
 
         return table;
+    }
+    
+    public void vyrobContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+            MenuItem detailEventu = new MenuItem("Zobrazit detail");
+            MenuItem smazEvent = new MenuItem("Smazat");
+            detailEventu.setOnAction(new EventHandler <ActionEvent> () {
+                public void handle(ActionEvent click) {
+                    eventDetailUI.nactiUI(stage, SeznamEventuUI.this);
+                }
+             });
+            smazEvent.setOnAction(new EventHandler <ActionEvent> () {
+                public void handle(ActionEvent click) {
+                    Alert alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Smazat Event");
+                    alert.setHeaderText("Event bude permanentně vymazán z databáze.");
+                    alert.setContentText("Chcete opravdu smazat?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK){
+                    // ... user chose OK
+                    //Databaze.deleteEvent();
+                    }/* else {
+                    // ... user chose CANCEL or closed the dialog
+                }*/
+                    
+                }
+             });
+            contextMenu.getItems().addAll(detailEventu, smazEvent);
+        this.table.setOnMousePressed(new EventHandler <MouseEvent>() {
+            
+            @Override
+            public void handle(MouseEvent click) {
+                if (click.getButton() == MouseButton.SECONDARY) {
+                    contextMenu.show(scene.getWindow(), click.getScreenX(), click.getScreenY());
+                }
+            }
+        });
     }
 
 }
