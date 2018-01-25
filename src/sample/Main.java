@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Admin;
+import sample.db.Spravce;
+import sample.db.Uzivatel;
 
 public class Main extends Application {
 
@@ -27,6 +30,7 @@ public class Main extends Application {
     private PridatOrganizatoraUI pridatOrganizatoraUI = new PridatOrganizatoraUI();
     private PridatEventUI pridatEventUI = new PridatEventUI();
     private PridatMistoUI pridatMistoUI = new PridatMistoUI();
+    private Spravce spravce;
     //neregistrovaný
     private Button guestShowEvent = new Button();
     private Scene guestScene;
@@ -50,6 +54,9 @@ public class Main extends Application {
     private VBox registredCenterButtonsVbox = new VBox();
 
     //admin
+    private BorderPane adminBorderPane = new BorderPane();
+    private Scene adminScene;
+    private Scene managerScene;
     private VBox adminCenterButtonsVbox = new VBox();
     private HBox adminEventButtonHbox = new HBox();
     private HBox adminOrganizerButtonHbox = new HBox();
@@ -67,8 +74,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         mainStage = primaryStage;
 
-        uiNeregistrovany();
-        uiRegistrovany();
+        zobrazMainMenuUI2(null,null,null);
 
         mainStage.setTitle("RandomGuys");
         mainStage.show();
@@ -125,98 +131,134 @@ public class Main extends Application {
     }
 
     private void uiNeregistrovany(){
-        guestShowEvent.setText("Eventy");
-        guestShowEvent.setPrefWidth(150);
-        guestLoginButton.setText("Login");
-        guestLoginButton.setPrefWidth(150);
-        guestTopHbox.setPadding(new Insets(20));
-        guestTitleLabel.setText("Ticketstream");
-        guestTitleLabel.setFont(Font.font("Arial",32));
+        if (guestScene == null)
+        {
+            guestShowEvent.setText("Eventy");
+            guestShowEvent.setPrefWidth(150);
+            guestLoginButton.setText("Login");
+            guestLoginButton.setPrefWidth(150);
+            guestTopHbox.setPadding(new Insets(20));
+            guestTitleLabel.setText("Ticketstream");
+            guestTitleLabel.setFont(Font.font("Arial",32));
+            guestBorderPane.setTop(guestTopHbox);
+            guestBorderPane.setCenter(guestCenterVbox);
+            guestTopHbox.setAlignment(Pos.BASELINE_RIGHT);
+            guestTopHbox.getChildren().add(guestLoginButton);
+            guestCenterVbox.getChildren().addAll(guestTitleLabel,guestShowEvent);
+            guestCenterVbox.setAlignment(Pos.CENTER);
+            guestCenterVbox.setSpacing(200);
+            guestScene = new Scene(guestBorderPane, 1200, 720);
+        }
 
-        guestBorderPane.setTop(guestTopHbox);
-        guestBorderPane.setCenter(guestCenterVbox);
-
-        guestTopHbox.setAlignment(Pos.BASELINE_RIGHT);
-        guestTopHbox.getChildren().add(guestLoginButton);
-
-        guestCenterVbox.getChildren().addAll(guestTitleLabel,guestShowEvent);
-        guestCenterVbox.setAlignment(Pos.CENTER);
-        guestCenterVbox.setSpacing(200);
-        guestScene = new Scene(guestBorderPane, 1200, 720);
         mainStage.setScene(guestScene);
     }
 
     private void uiRegistrovany(){
-        registredShowEvent.setText("Eventy");
-        registredShowEvent.setPrefWidth(150);
-        registredProfileButton.setText("Zde bude jméno a body");
-        registredProfileButton.setPrefWidth(150);
-        registredLogoutButton.setText("Odhlásit");
-        registredLogoutButton.setPrefWidth(150);
-        registredHistory.setText("Historie nákupů");
-        registredHistory.setPrefWidth(150);
-        registredReview.setText("Hodnocení");
-        registredReview.setPrefWidth(150);
-        registredTitleLabel.setText("Ticketstream");
-        registredTitleLabel.setFont(Font.font("Arial",32));
+        if (registredScene == null)
+        {
+            registredShowEvent.setText("Eventy");
+            registredShowEvent.setPrefWidth(150);
+            registredProfileButton.setText("Zde bude jméno a body");
+            registredProfileButton.setPrefWidth(150);
+            registredLogoutButton.setText("Odhlásit");
+            registredLogoutButton.setPrefWidth(150);
+            registredHistory.setText("Historie nákupů");
+            registredHistory.setPrefWidth(150);
+            registredReview.setText("Hodnocení");
+            registredReview.setPrefWidth(150);
+            registredTitleLabel.setText("Ticketstream");
+            registredTitleLabel.setFont(Font.font("Arial",32));
+            registredBorderPane.setTop(registredTopVbox);
+            registredBorderPane.setCenter(registredCenterVbox);
+            registredTopVbox.setAlignment(Pos.BASELINE_RIGHT);
+            registredTopVbox.getChildren().addAll(registredProfileButton, registredLogoutButton);
+            registredTopVbox.setPadding(new Insets(20));
+            registredTopVbox.setSpacing(10);
+            registredCenterVbox.getChildren().addAll(registredTitleLabel, registredCenterButtonsVbox);
+            registredCenterVbox.setAlignment(Pos.CENTER);
+            registredCenterVbox.setSpacing(200);
+            registredCenterButtonsVbox.getChildren().addAll(registredShowEvent, registredHistory, registredReview);
+            registredCenterButtonsVbox.setAlignment(Pos.CENTER);
+            registredCenterButtonsVbox.setSpacing(10);
+            registredScene = new Scene(registredBorderPane, 1200, 720);
+        }
 
-        registredBorderPane.setTop(registredTopVbox);
-        registredBorderPane.setCenter(registredCenterVbox);
-
-        registredTopVbox.setAlignment(Pos.BASELINE_RIGHT);
-        registredTopVbox.getChildren().addAll(registredProfileButton, registredLogoutButton);
-        registredTopVbox.setPadding(new Insets(20));
-        registredTopVbox.setSpacing(10);
-
-        //if (user je přihlášen && není admin)
-        /*registredCenterVbox.getChildren().addAll(registredTitleLabel, registredCenterButtonsVbox);
-        registredCenterVbox.setAlignment(Pos.CENTER);
-        registredCenterVbox.setSpacing(200);
-
-        registredCenterButtonsVbox.getChildren().addAll(showEvent, registredHistory, registredReview);
-        registredCenterButtonsVbox.setAlignment(Pos.CENTER);
-        registredCenterButtonsVbox.setSpacing(10);*/
-        //else if (user je přihlášen && je admin)
-        registredCenterVbox.getChildren().addAll(registredTitleLabel, adminCenterButtonsVbox);
-        registredCenterVbox.setAlignment(Pos.CENTER);
-        registredCenterVbox.setSpacing(200);
-        adminAddEvent.setText("Přidat event");
-        adminAddEvent.setPrefWidth(150);
-        adminAddOrganizer.setText("Přidat organizátora");
-        adminAddOrganizer.setPrefWidth(150);
-        adminShowOrganizer.setText("Seznam organizátorů");
-        adminShowOrganizer.setPrefWidth(150);
-        adminAddPlace.setText("Přidat místo");
-        adminAddPlace.setPrefWidth(150);
-        adminShowPlace.setText("Seznam míst");
-        adminShowPlace.setPrefWidth(150);
-        adminAddAdmin.setText("Přidat správce");
-        adminAddAdmin.setPrefWidth(150);
-        adminShowAdmin.setText("Seznam správců");
-        adminShowAdmin.setPrefWidth(150);
-        adminCenterButtonsVbox.getChildren().addAll(adminEventButtonHbox,adminOrganizerButtonHbox,adminPlaceButtonHbox,adminAdminButtonHbox);
-        adminCenterButtonsVbox.setSpacing(10);
-        adminEventButtonHbox.getChildren().addAll(adminAddEvent,registredShowEvent);
-        adminEventButtonHbox.setAlignment(Pos.CENTER);
-        adminOrganizerButtonHbox.getChildren().addAll(adminAddOrganizer,adminShowOrganizer);
-        adminOrganizerButtonHbox.setAlignment(Pos.CENTER);
-        adminPlaceButtonHbox.getChildren().addAll(adminAddPlace,adminShowPlace);
-        adminPlaceButtonHbox.setAlignment(Pos.CENTER);
-        adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
-        adminAdminButtonHbox.setAlignment(Pos.CENTER);
-
-
-
-        registredScene = new Scene(registredBorderPane, 1200, 720);
         mainStage.setScene(registredScene);
+    }
+
+    private void uiAdmin(){
+        if (adminScene == null){
+            registredShowEvent.setText("Eventy");
+            registredShowEvent.setPrefWidth(150);
+            registredTopVbox.setAlignment(Pos.BASELINE_RIGHT);
+            registredTopVbox.getChildren().addAll(registredProfileButton, registredLogoutButton);
+            registredTopVbox.setPadding(new Insets(20));
+            registredTopVbox.setSpacing(10);
+            registredProfileButton.setText("Zde bude jméno a body");
+            registredProfileButton.setPrefWidth(150);
+            registredLogoutButton.setText("Odhlásit");
+            registredLogoutButton.setPrefWidth(150);
+            registredTitleLabel.setText("Ticketstream");
+            registredTitleLabel.setFont(Font.font("Arial",32));
+            adminBorderPane.setTop(registredTopVbox);
+            adminBorderPane.setCenter(registredCenterVbox);
+            registredCenterVbox.getChildren().addAll(registredTitleLabel, adminCenterButtonsVbox);
+            registredCenterVbox.setAlignment(Pos.CENTER);
+            registredCenterVbox.setSpacing(200);
+            adminAddEvent.setText("Přidat event");
+            adminAddEvent.setPrefWidth(150);
+            adminAddOrganizer.setText("Přidat organizátora");
+            adminAddOrganizer.setPrefWidth(150);
+            adminShowOrganizer.setText("Seznam organizátorů");
+            adminShowOrganizer.setPrefWidth(150);
+            adminAddPlace.setText("Přidat místo");
+            adminAddPlace.setPrefWidth(150);
+            adminShowPlace.setText("Seznam míst");
+            adminShowPlace.setPrefWidth(150);
+            adminAddAdmin.setText("Přidat správce");
+            adminAddAdmin.setPrefWidth(150);
+            adminShowAdmin.setText("Seznam správců");
+            adminShowAdmin.setPrefWidth(150);
+            adminCenterButtonsVbox.getChildren().addAll(adminEventButtonHbox,adminOrganizerButtonHbox,adminPlaceButtonHbox,adminAdminButtonHbox);
+            adminCenterButtonsVbox.setSpacing(10);
+            adminEventButtonHbox.getChildren().addAll(adminAddEvent,registredShowEvent);
+            adminEventButtonHbox.setAlignment(Pos.CENTER);
+            adminOrganizerButtonHbox.getChildren().addAll(adminAddOrganizer,adminShowOrganizer);
+            adminOrganizerButtonHbox.setAlignment(Pos.CENTER);
+            adminPlaceButtonHbox.getChildren().addAll(adminAddPlace,adminShowPlace);
+            adminPlaceButtonHbox.setAlignment(Pos.CENTER);
+            if (spravce != null)
+            {
+                adminAdminButtonHbox.setVisible(false);
+            }
+            else
+            {
+                adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
+                adminAdminButtonHbox.setAlignment(Pos.CENTER);
+            }
+            adminScene = new Scene(adminBorderPane, 1200, 720);
+        }
+
+        mainStage.setScene(adminScene);
     }
 
     public void zobrazMainMenuUI(){
         //vytvoří se podmínka pro
         //if (user login) -> zobrazí UI pro registrovaného
-        mainStage.setScene(registredScene);
+        uiAdmin();
         //else if (!user login) -> zobrazí UI pro neregistrovaného
         //mainStage.setScene(guestScene);
+    }
+
+    public void zobrazMainMenuUI2(Uzivatel uzivatel, Spravce spravce, Admin admin){
+        //vytvoří se podmínka pro
+        this.spravce = spravce;
+        if (uzivatel != null)
+            uiRegistrovany();
+        else if (spravce != null || admin != null)
+            uiAdmin();
+        else
+            uiNeregistrovany();
     }
 
 

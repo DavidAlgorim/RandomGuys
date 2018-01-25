@@ -55,6 +55,10 @@ public class PrihlaseniUI {
 
     private Main main;
 
+    private Uzivatel uzivatel;
+    private Spravce spravce;
+    private Admin admin;
+
     public void nactiUI(Stage stage, Main main){
         this.main = main;
         prihlaseniUI();
@@ -107,21 +111,21 @@ public class PrihlaseniUI {
 
     public void prihlasovani(){
         // Pracoval bych spíše s username, takže jen všude nahradit username za username
-        Osoba uzivatel = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
-        if(uzivatel instanceof Uzivatel){
+        Osoba osoba = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
+        if(osoba instanceof Uzivatel){
             // Zobrazit UI pro přihlášené
-
-            main.zobrazMainMenuUI();
+            uzivatel = (Uzivatel) osoba;
+            main.zobrazMainMenuUI2(uzivatel, null, null);
         }
-        else if(uzivatel instanceof Spravce){
+        else if(osoba instanceof Spravce){
             // Zobrazit UI pro správce
-
-            main.zobrazMainMenuUI();
+            spravce = (Spravce) osoba;
+            main.zobrazMainMenuUI2(null, spravce, null);
         }
-        else if(uzivatel instanceof Admin){
+        else if(osoba instanceof Admin){
             // Zobrazit UI pro admina
-
-            main.zobrazMainMenuUI();
+            admin = (Admin) osoba;
+            main.zobrazMainMenuUI2(null, null, admin);
         }
         else{
             // Zobrazit uživateli alert, že je chybné jméno nebo heslo
