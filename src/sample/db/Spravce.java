@@ -15,17 +15,17 @@ public class Spravce implements Osoba{
         this.email = email;
     }
 
-    public Event pridejEvent(String nazev, Organizator organizator, Misto misto, int cena, int zvyhodnenaCena,
+    public void pridejEvent(String nazev, Organizator organizator, Misto misto, int cena, int zvyhodnenaCena,
                              int kapacita, String popis){
-        return Databaze.insertNewEvent(nazev,misto.getId(),cena,zvyhodnenaCena,kapacita,popis,organizator.getId());
+        Databaze.insertNewEvent(nazev,misto.getId(),cena,zvyhodnenaCena,kapacita,popis,organizator.getId());
     }
 
-    public Organizator pridejOrganizatora(String jmeno, String email, int telefon){
-        return Databaze.insertNewOrganizator(jmeno,email,telefon);
+    public void pridejOrganizatora(String jmeno, String email, int telefon){
+        Databaze.insertNewOrganizator(jmeno,email,telefon);
     }
 
-    public Misto pridejMisto(String nazev, String adresa, String email, int telefon){
-        return Databaze.insertNewMisto(nazev,adresa,email,telefon);
+    public void pridejMisto(String nazev, String adresa, String email, int telefon){
+        Databaze.insertNewMisto(nazev,adresa,email,telefon);
     }
 
     public void zmenUdaje(String username, String jmeno, String email){
