@@ -69,8 +69,8 @@ public class PrihlaseniUI {
 
 
         loginButton.setOnMouseClicked(event ->  {
-            Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
-            prihlasovani();
+            Osoba prihlasenaOsoba = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
+            prihlasovani(prihlasenaOsoba);
         });
 
         registerText.setOnMouseClicked(event -> {
@@ -109,21 +109,23 @@ public class PrihlaseniUI {
 
 
 
-    public void prihlasovani(){
+    public void prihlasovani(Osoba osoba){
         // Pracoval bych spíše s username, takže jen všude nahradit username za username
-        Osoba osoba = Prihlaseni.prihlasitSe(getUsername().getText(), getPassword().getText());
         if(osoba instanceof Uzivatel){
             // Zobrazit UI pro přihlášené
+            System.out.println("uzivatel");
             uzivatel = (Uzivatel) osoba;
             main.uiPodleUsera(uzivatel, null, null);
         }
         else if(osoba instanceof Spravce){
             // Zobrazit UI pro správce
+            System.out.println("spravce");
             spravce = (Spravce) osoba;
             main.uiPodleUsera(null, spravce, null);
         }
         else if(osoba instanceof Admin){
             // Zobrazit UI pro admina
+            System.out.println("admin");
             admin = (Admin) osoba;
             main.uiPodleUsera(null, null, admin);
         }
