@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Misto;
 
@@ -20,7 +21,7 @@ public class SeznamMistoUI {
 
     private TableColumn<Misto, String> sloupecNazev;
     private TableColumn<Misto, String> sloupecAdresa;
-    private TableColumn<Misto, String> sloupecTelefon;
+    private TableColumn<Misto, Integer> sloupecTelefon;
     private TableColumn<Misto, String> sloupecEmail;
     private TableView<Misto> table;
     private ObservableList<Misto> dataEventu;
@@ -75,13 +76,13 @@ public class SeznamMistoUI {
         sloupecEmail = new TableColumn("Email");
         sloupecEmail.setPrefWidth(130);
 
-        sloupecNazev.setCellValueFactory(new PropertyValueFactory<Misto, String>("jmeno"));
+        sloupecNazev.setCellValueFactory(new PropertyValueFactory<Misto, String>("nazev"));
         sloupecAdresa.setCellValueFactory(new PropertyValueFactory<Misto, String>("adresa"));
-        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Misto, String>("telefon"));
+        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Misto, Integer>("telefon"));
         sloupecEmail.setCellValueFactory(new PropertyValueFactory<Misto, String>("email"));
 
         sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         sloupecEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 
         table.setItems(dataEventu);

@@ -192,7 +192,7 @@ public class Databaze {
     public static List<Misto> getMista(){
         Connection connection = getDBConn();
         PreparedStatement statement;
-        List<Misto> mista = null;
+        List<Misto> mista = new ArrayList<>();
         try {
             statement = connection.prepareStatement("SELECT * FROM misto");
             ResultSet rs = statement.executeQuery();
