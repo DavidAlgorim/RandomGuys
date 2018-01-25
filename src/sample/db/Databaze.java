@@ -230,14 +230,17 @@ public class Databaze {
                 String status = rs.getString("status");
                 switch (status) {
                     case "uzivatel":
+                        System.out.println("db uzivatel");
                         osoba = new Uzivatel(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
                                 rs.getString("email"), rs.getInt("body"));
                         break;
                     case "spravce":
+                        System.out.println("db spravce");
                         osoba = new Spravce(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
                                 rs.getString("email"));
                         break;
                     case "admin":
+                        System.out.println("db admin");
                         osoba = new Admin(rs.getInt("id_osoba"), username, rs.getString("jmeno"),
                                 rs.getString("email"));
                         break;
