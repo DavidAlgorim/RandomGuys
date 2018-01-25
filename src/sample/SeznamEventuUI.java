@@ -103,17 +103,17 @@ public class SeznamEventuUI {
         sloupecOrganizator.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getOrganizator().getJmeno()));
         sloupecMisto.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMisto().getAdresa()));
         sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, Integer>("cena"));
-        //sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("hodnoceni"));
+        sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("AVG(hodnoceni)"));
 
 
         sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecOrganizator.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecMisto.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        //sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
         table.setItems(dataEventu);
-        table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena);
+        table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena, sloupecHodnoceni);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         dataEventu.addAll(Databaze.getEventy());

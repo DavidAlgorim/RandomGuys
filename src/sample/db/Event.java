@@ -10,9 +10,10 @@ public class Event {
     private int zvyhodnenaCena;
     private int kapacita;
     private String popis;
+    private double hodnoceni;
 
     Event(int id, String nazev, Organizator organizator, Misto misto, int cena, int zvyhodnenaCena, int kapacita,
-                 String popis){
+                 String popis, double hodnoceni){
         this.id = id;
         this.nazev = nazev;
         this.organizator = organizator;
@@ -21,6 +22,7 @@ public class Event {
         this.zvyhodnenaCena = zvyhodnenaCena;
         this.kapacita = kapacita;
         this.popis = popis;
+        this.hodnoceni = hodnoceni;
     }
 
     int getId(){
@@ -53,5 +55,9 @@ public class Event {
 
     public String getPopis() {
         return popis;
+    }
+
+    public double getHodnoceni() {
+        return hodnoceni;
     }
 }
