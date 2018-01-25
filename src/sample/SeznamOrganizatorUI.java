@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,14 +14,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
-import sample.db.Event;
 import sample.db.Organizator;
 
 public class SeznamOrganizatorUI {
 
     private TableColumn<Organizator, String> sloupecJmeno;
-    //private TableColumn<Organizator, String> sloupecTelefon;
+    private TableColumn<Organizator, Integer> sloupecTelefon;
     private TableColumn<Organizator, String> sloupecEmail;
     private TableView<Organizator> table;
     private ObservableList<Organizator> dataEventu;
@@ -70,21 +69,21 @@ public class SeznamOrganizatorUI {
 
         sloupecJmeno = new TableColumn("Jméno");
         sloupecJmeno.setPrefWidth(110);
-        //sloupecTelefon = new TableColumn("Telefon");
-        //sloupecTelefon.setPrefWidth(130);
+        sloupecTelefon = new TableColumn("Telefon");
+        sloupecTelefon.setPrefWidth(130);
         sloupecEmail = new TableColumn("Email");
         sloupecEmail.setPrefWidth(130);
         
         sloupecJmeno.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getJmeno()));
-        //sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator,Integer>("telefon"));
+        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, Integer>("cena"));
         sloupecEmail.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEmail()));
      
         sloupecJmeno.setCellFactory(TextFieldTableCell.forTableColumn());
-        //sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         sloupecEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 
         table.setItems(dataEventu);
-        table.getColumns().addAll(sloupecJmeno, sloupecEmail);
+        table.getColumns().addAll(sloupecJmeno, sloupecTelefon, sloupecEmail);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         dataEventu.addAll(Databaze.getOrganizatori());
