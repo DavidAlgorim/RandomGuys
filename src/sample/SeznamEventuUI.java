@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -10,19 +12,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Event;
+import sample.db.Organizator;
+
+import javax.xml.soap.Text;
+import java.util.Observable;
 
 public class SeznamEventuUI {
 
     private TableColumn<Event, String> sloupecNazev;
     private TableColumn<Event, String> sloupecOrganizator;
     private TableColumn<Event, String> sloupecMisto;
-    private TableColumn<Event, String> sloupecCena;
+    private TableColumn<Event, Integer> sloupecCena;
     private TableColumn<Event, Double> sloupecHodnoceni;
     private TableView<Event> table;
     private ObservableList<Event> dataEventu;
@@ -91,19 +100,20 @@ public class SeznamEventuUI {
         sloupecHodnoceni.setEditable(false);
 
         sloupecNazev.setCellValueFactory(new PropertyValueFactory<Event, String>("nazev"));
-        sloupecOrganizator.setCellValueFactory(new PropertyValueFactory<Event, String>("organizator"));
-        sloupecMisto.setCellValueFactory(new PropertyValueFactory<Event, String>("misto"));
-        sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, String>("cena"));
-        sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("hodnoceni"));
+        sloupecOrganizator.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getOrganizator().getJmeno()));
+        sloupecMisto.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMisto().getAdresa()));
+        sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, Integer>("cena"));
+        //sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("hodnoceni"));
+
 
         sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecOrganizator.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecMisto.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        //sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
         table.setItems(dataEventu);
-        table.getColumns().addAll(sloupecNazev, sloupecOrganizator, sloupecMisto, sloupecCena, sloupecHodnoceni);
+        table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         dataEventu.addAll(Databaze.getEventy());
