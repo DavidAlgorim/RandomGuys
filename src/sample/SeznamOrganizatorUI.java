@@ -75,7 +75,7 @@ public class SeznamOrganizatorUI {
         sloupecEmail.setPrefWidth(130);
         
         sloupecJmeno.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getJmeno()));
-        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, Integer>("cena"));
+        sloupecTelefon.setCellValueFactory(new PropertyValueFactory<Organizator, Integer>("telefon"));
         sloupecEmail.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEmail()));
      
         sloupecJmeno.setCellFactory(TextFieldTableCell.forTableColumn());
