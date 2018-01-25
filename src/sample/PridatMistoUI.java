@@ -3,6 +3,7 @@ package sample;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Databaze;
+
+import javax.xml.crypto.Data;
 
 public class PridatMistoUI {
 
@@ -41,7 +45,16 @@ public class PridatMistoUI {
             main.zobrazMainMenuUI();
         });
         centerButtonVytvorit.setOnMouseClicked(event -> {
-            main.zobrazMainMenuUI();
+            Databaze.insertNewMisto(centerTextAreaNazev.getText(), centerTextAreaAdresa.getText(), centerTextAreaEmail.getText(), Integer.parseInt(centerTextAreaTelefon.getText()));
+            centerTextAreaNazev.clear();
+            centerTextAreaAdresa.clear();
+            centerTextAreaEmail.clear();
+            centerTextAreaTelefon.clear();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Místo úspěšně přidáno");
+            alert.showAndWait();
         });
     }
 
