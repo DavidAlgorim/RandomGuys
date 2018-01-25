@@ -30,7 +30,9 @@ public class Main extends Application {
     private PridatOrganizatoraUI pridatOrganizatoraUI = new PridatOrganizatoraUI();
     private PridatEventUI pridatEventUI = new PridatEventUI();
     private PridatMistoUI pridatMistoUI = new PridatMistoUI();
+    private Uzivatel uzivatel;
     private Spravce spravce;
+    private Admin admin;
     //neregistrovaný
     private Button guestShowEvent = new Button();
     private Scene guestScene;
@@ -74,7 +76,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         mainStage = primaryStage;
 
-        zobrazMainMenuUI2(null,null,null);
+        zobrazMainMenuUI();
 
         mainStage.setTitle("RandomGuys");
         mainStage.show();
@@ -104,7 +106,10 @@ public class Main extends Application {
         });
 
         registredLogoutButton.setOnMouseClicked(event -> {
-            mainStage.setScene(guestScene);
+            uzivatel = null;
+            spravce = null;
+            admin = null;
+            uiNeregistrovany();
         });
 
         adminShowOrganizer.setOnMouseClicked(event -> {
@@ -233,6 +238,7 @@ public class Main extends Application {
             }
             else
             {
+                adminAdminButtonHbox.setVisible(true);
                 adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
                 adminAdminButtonHbox.setAlignment(Pos.CENTER);
             }
@@ -243,16 +249,13 @@ public class Main extends Application {
     }
 
     public void zobrazMainMenuUI(){
-        //vytvoří se podmínka pro
-        //if (user login) -> zobrazí UI pro registrovaného
-        uiAdmin();
-        //else if (!user login) -> zobrazí UI pro neregistrovaného
-        //mainStage.setScene(guestScene);
+        uiPodleUsera(uzivatel, spravce, admin);
     }
 
-    public void zobrazMainMenuUI2(Uzivatel uzivatel, Spravce spravce, Admin admin){
-        //vytvoří se podmínka pro
+    public void uiPodleUsera(Uzivatel uzivatel, Spravce spravce, Admin admin){
+        this.uzivatel = uzivatel;
         this.spravce = spravce;
+        this.admin =  admin;
         if (uzivatel != null)
             uiRegistrovany();
         else if (spravce != null || admin != null)

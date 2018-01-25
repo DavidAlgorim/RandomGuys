@@ -115,17 +115,17 @@ public class PrihlaseniUI {
         if(osoba instanceof Uzivatel){
             // Zobrazit UI pro přihlášené
             uzivatel = (Uzivatel) osoba;
-            main.zobrazMainMenuUI2(uzivatel, null, null);
+            main.uiPodleUsera(uzivatel, null, null);
         }
         else if(osoba instanceof Spravce){
             // Zobrazit UI pro správce
             spravce = (Spravce) osoba;
-            main.zobrazMainMenuUI2(null, spravce, null);
+            main.uiPodleUsera(null, spravce, null);
         }
         else if(osoba instanceof Admin){
             // Zobrazit UI pro admina
             admin = (Admin) osoba;
-            main.zobrazMainMenuUI2(null, null, admin);
+            main.uiPodleUsera(null, null, admin);
         }
         else{
             // Zobrazit uživateli alert, že je chybné jméno nebo heslo
