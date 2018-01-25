@@ -244,25 +244,26 @@ public class Main extends Application {
             adminAddAdmin.setPrefWidth(150);
             adminShowAdmin.setText("Seznam správců");
             adminShowAdmin.setPrefWidth(150);
-            adminCenterButtonsVbox.getChildren().addAll(adminEventButtonHbox,adminOrganizerButtonHbox,adminPlaceButtonHbox,adminAdminButtonHbox);
-            adminCenterButtonsVbox.setSpacing(10);
             adminEventButtonHbox.getChildren().addAll(adminAddEvent,adminShowEvent);
             adminEventButtonHbox.setAlignment(Pos.CENTER);
             adminOrganizerButtonHbox.getChildren().addAll(adminAddOrganizer,adminShowOrganizer);
             adminOrganizerButtonHbox.setAlignment(Pos.CENTER);
             adminPlaceButtonHbox.getChildren().addAll(adminAddPlace,adminShowPlace);
             adminPlaceButtonHbox.setAlignment(Pos.CENTER);
-            if (spravce != null)
-            {
-                adminAdminButtonHbox.setVisible(false);
-            }
-            else
-            {
-                adminAdminButtonHbox.setVisible(true);
-                adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
-                adminAdminButtonHbox.setAlignment(Pos.CENTER);
-            }
+            adminAdminButtonHbox.getChildren().addAll(adminAddAdmin,adminShowAdmin);
+            adminAdminButtonHbox.setAlignment(Pos.CENTER);
+            adminCenterButtonsVbox.getChildren().addAll(adminEventButtonHbox,adminOrganizerButtonHbox,adminPlaceButtonHbox,adminAdminButtonHbox);
+            adminCenterButtonsVbox.setSpacing(10);
+
             adminScene = new Scene(adminBorderPane, 1200, 720);
+        }
+        if (spravce != null)
+        {
+            adminAdminButtonHbox.setVisible(false);
+        }
+        else
+        {
+            adminAdminButtonHbox.setVisible(true);
         }
 
         mainStage.setScene(adminScene);
