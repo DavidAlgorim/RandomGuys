@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Databaze;
+import sample.db.Misto;
 
 public class PridatEventUI {
 
@@ -46,7 +49,18 @@ public class PridatEventUI {
             main.zobrazMainMenuUI();
         });
         centerButtonVytvorit.setOnMouseClicked(event -> {
-            main.zobrazMainMenuUI();
+            Databaze.insertNewEvent(centerTextAreaNazev.getText(), Integer.parseInt(centerComboBoxMisto.getSelectionModel().getSelectedItem()),
+                    Integer.parseInt(centerTextAreaCena.getText()), Integer.parseInt(centerTextAreaCena.getText()),
+                    Integer.parseInt(centerTextAreaKapacita.getText()),centerTextAreaPopis.getText(), Integer.parseInt(centerComboBoxOrganizator.getSelectionModel().getSelectedItem()));
+
+            centerTextAreaNazev.clear();
+            centerTextAreaCena.clear();
+            centerTextAreaKapacita.clear();
+            centerTextAreaPopis.clear();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Event úspěšně přidán");
+            alert.showAndWait();
         });
     }
 
