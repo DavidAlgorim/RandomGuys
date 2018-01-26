@@ -21,7 +21,7 @@ public class Databaze {
         PreparedStatement statement;
         Event event = null;
         try {
-            statement = connection.prepareStatement("SELECT * FROM event GROUP BY id_misto, nazev");
+            statement = connection.prepareStatement("SELECT *, AVG(hodnoceni) FROM event JOIN hodnoceni USING (id_event) WHERE id_event = ? GROUP BY id_misto, nazev");
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
