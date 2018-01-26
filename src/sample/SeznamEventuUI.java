@@ -143,7 +143,8 @@ public class SeznamEventuUI {
                     eventDetailUI.nactiUI(stage, SeznamEventuUI.this);
                 }
              });
-            smazEvent.setOnAction(new EventHandler <ActionEvent> () {
+            if (main.getSpravce() != null || main.getAdmin() != null) {
+                smazEvent.setOnAction(new EventHandler <ActionEvent> () {
                 public void handle(ActionEvent click) {
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Smazat Event");
@@ -161,6 +162,12 @@ public class SeznamEventuUI {
                 }
              });
             contextMenu.getItems().addAll(detailEventu, smazEvent);
+            }
+            
+            else {
+                contextMenu.getItems().addAll(detailEventu);
+            }
+            
         this.table.setOnMousePressed(new EventHandler <MouseEvent>() {
             
             @Override
