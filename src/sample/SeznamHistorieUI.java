@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -71,10 +72,10 @@ public class SeznamHistorieUI {
         sloupecZvyhodneny = new TableColumn("Zvýhodněný");
         sloupecZvyhodneny.setPrefWidth(130);
 
-        //sloupecEvent.setCellValueFactory(new PropertyValueFactory<Listek, String>("zakaznik"));
+        sloupecEvent.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEvent().getNazev()));
         sloupecZvyhodneny.setCellValueFactory(new PropertyValueFactory<Listek, Boolean>("zvyhodneny"));
 
-        //sloupecEvent.setCellFactory(TextFieldTableCell.forTableColumn());
+        sloupecEvent.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecZvyhodneny.setCellFactory(TextFieldTableCell.<Listek, Boolean>forTableColumn(new BooleanStringConverter()));
 
         table.setItems(dataEventu);
