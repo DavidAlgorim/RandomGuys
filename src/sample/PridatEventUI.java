@@ -1,8 +1,10 @@
 package sample;
 
+import java.util.List;
 import java.util.function.UnaryOperator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import sample.db.Databaze;
+import sample.db.Misto;
+import sample.db.Organizator;
 
 public class PridatEventUI {
 
@@ -26,8 +30,10 @@ public class PridatEventUI {
     private TextArea centerTextAreaPopis = new TextArea();
     private TextField centerTextAreaNazev = new TextField();
     private ComboBox<String> centerComboBoxOrganizator = new ComboBox();
+    private ObservableList<Organizator> listOrganizatoru;
     private ObservableList<String> seznamOrganizatoru;
     private ComboBox<String> centerComboBoxMisto = new ComboBox();
+    private List<Misto> listMist;
     private ObservableList<String> seznamMist;
     private TextField centerTextAreaCena = new TextField();
     private TextField centerTextAreaKapacita = new TextField();
@@ -51,16 +57,39 @@ public class PridatEventUI {
             main.zobrazMainMenuUI();
         });
         centerButtonVytvorit.setOnMouseClicked(event -> {
-            Databaze.insertNewEvent(centerTextAreaNazev.getText(), Databaze.getIdMista(centerComboBoxMisto.getValue()), 
-                    Integer.valueOf(centerTextAreaCena.getText()), 0, Integer.valueOf(centerTextAreaKapacita.getText()), 
-                    centerTextAreaPopis.getText(), Databaze.getIdOrganizatora(centerComboBoxOrganizator.getValue()));
-            main.zobrazMainMenuUI();
+            Databaze.insertNewEvent(centerTextAreaNazev.getText(), Integer.parseInt(centerComboBoxMisto.getSelectionModel().getSelectedItem()),
+                    Integer.parseInt(centerTextAreaCena.getText()), Integer.parseInt(centerTextAreaCena.getText()),
+                    Integer.parseInt(centerTextAreaKapacita.getText()),centerTextAreaPopis.getText(), Integer.parseInt(centerComboBoxOrganizator.getSelectionModel().getSelectedItem()));
+
+            centerTextAreaNazev.clear();
+            centerTextAreaCena.clear();
+            centerTextAreaKapacita.clear();
+            centerTextAreaPopis.clear();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Event úspěšně přidán");
+            alert.showAndWait();
         });
     }
 
     private void vytvorScenu(){
         if (scene == null)
         {
+            //život by byl jednodušší bez milionu různých listů a jejich nekompatibilitou
+            listMist = FXCollections.observableList(Databaze.getMista());
+            seznamMist = FXCollections.observableArrayList();
+            for (Misto misto :
+                    listMist) {
+                seznamMist.add(misto.getNazev());
+            }
+
+            listOrganizatoru = FXCollections.observableList(Databaze.getOrganizatori());
+            seznamOrganizatoru = FXCollections.observableArrayList();
+            for (Organizator organizator :
+                    listOrganizatoru) {
+                seznamOrganizatoru.add(organizator.getJmeno());
+            }
+
             titleLabel.setText("Nový event");
             titleLabel.setFont(Font.font("Arial",32));
             topHbox.getChildren().add(titleLabel);
@@ -93,18 +122,7 @@ public class PridatEventUI {
 
 
             scene = new Scene(borderPane,1200,720);
-            
         }
     }
-    
-        
-    
-    /*public int najdiIdMista(String name){
-    Databaze.getMista().stream().filter(o -> o.getNazev().equals(name)).forEach(
-            o -> {
-                
-            }
-    );
-}*/
 
 }
