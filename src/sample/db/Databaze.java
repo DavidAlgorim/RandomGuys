@@ -29,7 +29,7 @@ public class Databaze {
                         getOrganizator(rs.getInt("id_organizator")),
                         getMisto(rs.getInt("id_misto")), rs.getInt("cena"),
                         rs.getInt("zvyhodnena_cena"), rs.getInt("kapacita"),
-                        rs.getString("popis"));
+                        rs.getString("popis"), rs.getDouble("AVG(hodnoceni)"));
             }
             rs.close();
             statement.close();
@@ -94,7 +94,7 @@ public class Databaze {
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
         try {
-            statement = connection.prepareStatement("SELECT id_event, nazev, cena, zvyhodnena_cena, id_organizator, kapacita, popis, id_misto FROM event");
+            statement = connection.prepareStatement("SELECT id_event, nazev, cena, zvyhodnena_cena, id_organizator, kapacita, popis, id_misto, AVG(hodnoceni) FROM event JOIN hodnoceni USING (id_event) GROUP BY id_misto, nazev");
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
@@ -102,7 +102,8 @@ public class Databaze {
                         getOrganizator(rs.getInt("id_organizator")),
                         getMisto(rs.getInt("id_misto")),rs.getInt("cena"),
                         rs.getInt("zvyhodnena_cena"),rs.getInt("kapacita"),
-                        rs.getString("popis")));
+                        rs.getString("popis"), rs.getDouble("AVG(hodnoceni)")));
+                System.out.println(rs.getDouble("AVG(hodnoceni)"));
             }
 
             rs.close();
@@ -127,7 +128,7 @@ public class Databaze {
                 eventy.add(new Event(rs.getInt("id_event"),rs.getString("nazev"),
                         organizator,getMisto(rs.getInt("id_misto")),
                         rs.getInt("cena"),rs.getInt("zvyhodnena_cena"),
-                        rs.getInt("kapacita"),rs.getString("popis")));
+                        rs.getInt("kapacita"),rs.getString("popis"), rs.getDouble("AVG(hodnoceni)")));
             }
 
             rs.close();
@@ -152,7 +153,7 @@ public class Databaze {
                 eventy.add(new Event(rs.getInt("id_event"),rs.getString("nazev"),
                         getOrganizator(rs.getInt("id_organizator")),
                         misto,rs.getInt("cena"),rs.getInt("zvyhodnena_cena"),
-                        rs.getInt("kapacita"),rs.getString("popis")));
+                        rs.getInt("kapacita"),rs.getString("popis"), rs.getDouble("AVG(hodnoceni)")));
             }
 
             rs.close();
