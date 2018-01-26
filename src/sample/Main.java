@@ -183,7 +183,7 @@ public class Main extends Application {
         {
             registredShowEvent.setText("Eventy");
             registredShowEvent.setPrefWidth(150);
-            registredProfileButton.setText("Zde bude jméno a body");
+            registredProfileButton.setText("Profil");
             registredProfileButton.setPrefWidth(150);
             registredLogoutButton.setText("Odhlásit");
             registredLogoutButton.setPrefWidth(150);

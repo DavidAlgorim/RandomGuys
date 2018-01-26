@@ -6,6 +6,11 @@ import java.util.Objects;
 public class Uzivatel implements Zakaznik{
 
     private int id;
+
+    public int getId() {
+        return id;
+    }
+
     private String username;
     private String jmeno;
     private String email;
