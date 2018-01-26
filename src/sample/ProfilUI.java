@@ -21,12 +21,11 @@ public class ProfilUI {
     private Label titleLabel = new Label();
     private VBox centerVbox = new VBox();
     private TextField centerTextAreaJmeno = new TextField();
-    private TextField centerTextAreaPrijmeni = new TextField();
     private TextField centerTextAreaHeslo = new TextField();
     private Button centerButtonZmenit = new Button();
     private Button centerButtonZpet = new Button();
     private Label centerLabelJmeno = new Label();
-    private Label centerLabelPrijmeni = new Label();
+    private Label centerLabelBody = new Label();
     private Label centerLabelHeslo = new Label();
 
     public void nactiUI(Stage stage, Main main){
@@ -59,10 +58,11 @@ public class ProfilUI {
             centerLabelJmeno.setText("Jméno");
             centerTextAreaJmeno.setText(uzivatel.getJmeno());
             centerTextAreaJmeno.setEditable(false);
+            centerLabelBody.setText("Bonusové body: " + Integer.toString(uzivatel.getBonusoveBody()));
             centerLabelHeslo.setText("Heslo");
             centerButtonZpet.setPrefWidth(220);
             centerButtonZmenit.setPrefWidth(220);
-            centerVbox.getChildren().addAll(centerLabelJmeno, centerTextAreaJmeno, centerLabelHeslo, centerTextAreaHeslo, centerButtonZmenit,
+            centerVbox.getChildren().addAll(centerLabelJmeno, centerTextAreaJmeno, centerLabelBody, centerLabelHeslo, centerTextAreaHeslo, centerButtonZmenit,
                     centerButtonZpet);
             centerVbox.setSpacing(5);
             centerVbox.setMaxWidth(220);
