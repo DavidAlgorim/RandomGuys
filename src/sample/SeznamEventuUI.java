@@ -90,7 +90,7 @@ public class SeznamEventuUI {
             bottomHbox.setPadding(new Insets(10));
             bottomHbox.setAlignment(Pos.CENTER);
             borderPane.setBottom(bottomHbox);
-            _provizorni.setText("Zakoupit lístky");
+            _provizorni.setText("provizorní tlačítko další hehe (předělá se na klik eventu)");
             scene = new Scene(borderPane, 1200,720);
         }
     }
