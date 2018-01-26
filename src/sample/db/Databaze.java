@@ -116,7 +116,7 @@ public class Databaze {
         return eventy;
     }
 
-    static List<Event> getEventyOrganizatora(Organizator organizator){
+    public static List<Event> getEventyOrganizatora(Organizator organizator){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -141,7 +141,7 @@ public class Databaze {
         return eventy;
     }
 
-    static List<Event> getEventyMista(Misto misto){
+    public static List<Event> getEventyMista(Misto misto){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -492,7 +492,7 @@ public class Databaze {
     // Přidávání osob
 
 
-    static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
+    public static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
         try {
             Connection connection = getDBConn();
 
