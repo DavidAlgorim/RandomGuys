@@ -27,9 +27,9 @@ public class SeznamOrganizatorUI {
     private ObservableList<Organizator> dataEventu;
 
     private Scene scene;
-    private BorderPane borderPane = new BorderPane();
-    private HBox bottomHbox = new HBox();
-    private Button backButton = new Button();
+    private BorderPane borderPane;
+    private HBox bottomHbox;
+    private Button backButton;
 
     private Main main;
     private Stage stage;
@@ -48,21 +48,23 @@ public class SeznamOrganizatorUI {
     }
 
     private void vytvorScenu(){
-        if (scene == null)
-        {
-            borderPane.setCenter(vytvorTabulku());
-            backButton.setText("Zpět");
-            backButton.setPrefWidth(150);
-            bottomHbox.getChildren().addAll(backButton);
-            bottomHbox.setPadding(new Insets(10));
-            bottomHbox.setAlignment(Pos.CENTER);
-            borderPane.setBottom(bottomHbox);
-            scene = new Scene(borderPane, 1200,720);
-        }
+        borderPane = new BorderPane();
+        borderPane.setCenter(vytvorTabulku());
+        backButton = new Button();
+        bottomHbox = new HBox();
+        backButton.setText("Zpět");
+        backButton.setPrefWidth(150);
+        bottomHbox.getChildren().addAll(backButton);
+        bottomHbox.setPadding(new Insets(10));
+        bottomHbox.setAlignment(Pos.CENTER);
+        borderPane.setBottom(bottomHbox);
+        scene = new Scene(borderPane, 1200,720);
     }
 
     private TableView<Organizator> vytvorTabulku() {
         table = new TableView<Organizator>();
+        table.getItems().clear();
+        dataEventu = null;
         dataEventu = FXCollections.observableArrayList();
 
         table.setEditable(true);
@@ -82,11 +84,11 @@ public class SeznamOrganizatorUI {
         sloupecTelefon.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         sloupecEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        dataEventu.addAll(Databaze.getOrganizatori());
+
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecJmeno, sloupecTelefon, sloupecEmail);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        dataEventu.addAll(Databaze.getOrganizatori());
 
         return table;
     }
