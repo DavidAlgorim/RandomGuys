@@ -505,7 +505,7 @@ public static void removeEvent(String nazev) {
         Connection connection = getDBConn();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM event where nazev = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM event where nazev LIKE ?");
             statement.setString(1, nazev);
 
             statement.execute();
