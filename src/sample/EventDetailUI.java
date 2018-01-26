@@ -74,6 +74,11 @@ public class EventDetailUI {
                 else
                     Databaze.insertNewListek(false,vybranyEvent,uzivatel);
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Success");
+            alert.setContentText("Koupě potvrzena");
+            alert.showAndWait();
+            seznamEventuUI.zobrazSeznamEventuUI();
         });
         centerComboBoxPocet.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override

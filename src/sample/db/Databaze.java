@@ -465,6 +465,8 @@ public class Databaze {
             statement.setInt(2, event.getId());
             statement.setInt(3, uzivatel.getId());
 
+
+            System.out.println("success");
             statement.execute();
 
             statement.close();
@@ -485,6 +487,7 @@ public class Databaze {
             statement.setString(1, jmeno);
             statement.setBoolean(2, zvyhodneni);
             statement.setInt(3, event.getId());
+            System.out.println("success");
 
             statement.execute();
 
