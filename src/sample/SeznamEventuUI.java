@@ -112,6 +112,12 @@ public class SeznamEventuUI {
         sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
+
+        if (main.getSpravce() != null || main.getAdmin() != null) {
+            table.setEditable(true);
+        } else {
+            table.setEditable(false);
+        }
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena, sloupecHodnoceni);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
