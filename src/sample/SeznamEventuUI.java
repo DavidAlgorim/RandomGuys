@@ -36,10 +36,10 @@ public class SeznamEventuUI {
     private ObservableList<Event> dataEventu;
 
     private Scene scene;
-    private BorderPane borderPane = new BorderPane();
-    private HBox bottomHbox = new HBox();
-    private Button backButton = new Button();
-    private Button _provizorni = new Button();
+    private BorderPane borderPane;
+    private HBox bottomHbox;
+    private Button backButton;
+    private Button _provizorni;
 
     private Main main;
     private Stage stage;
@@ -72,18 +72,19 @@ public class SeznamEventuUI {
     }
 
     private void vytvorScenu(){
-        if (scene == null)
-        {
-            borderPane.setCenter(vytvorTabulku());
-            backButton.setText("Zpět");
-            backButton.setPrefWidth(150);
-            bottomHbox.getChildren().addAll(backButton, _provizorni);
-            bottomHbox.setPadding(new Insets(10));
-            bottomHbox.setAlignment(Pos.CENTER);
-            borderPane.setBottom(bottomHbox);
-            _provizorni.setText("Zakoupit lístky");
-            scene = new Scene(borderPane, 1200,720);
-        }
+        borderPane = new BorderPane();
+        borderPane.setCenter(vytvorTabulku());
+        backButton = new Button();
+        backButton.setText("Zpět");
+        backButton.setPrefWidth(150);
+        bottomHbox = new HBox();
+        bottomHbox.getChildren().addAll(backButton, _provizorni);
+        bottomHbox.setPadding(new Insets(10));
+        bottomHbox.setAlignment(Pos.CENTER);
+        borderPane.setBottom(bottomHbox);
+        _provizorni = new Button();
+        _provizorni.setText("Zakoupit lístky");
+        scene = new Scene(borderPane, 1200,720);
     }
 
     private TableView<Event> vytvorTabulku() {
@@ -122,11 +123,10 @@ public class SeznamEventuUI {
         } else {
             table.setEditable(false);
         }
+        dataEventu.addAll(Databaze.getEventy());
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena, sloupecHodnoceni);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        dataEventu.addAll(Databaze.getEventy());
 
         return table;
     }
