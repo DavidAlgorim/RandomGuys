@@ -151,12 +151,10 @@ public class SeznamEventuUI {
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.OK){
-                    // ... user chose OK
-                    //Databaze.deleteEvent();
-                    }/* else {
-                    // ... user chose CANCEL or closed the dialog
-                }*/
-                    
+                        Databaze.removeEvent(table.getSelectionModel().getSelectedItem().getNazev());
+                    } else {
+
+                    }
                 }
              });
             contextMenu.getItems().addAll(detailEventu, smazEvent);
