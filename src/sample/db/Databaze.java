@@ -21,7 +21,7 @@ public class Databaze {
         PreparedStatement statement;
         Event event = null;
         try {
-            statement = connection.prepareStatement("SELECT *, AVG(hodnoceni) FROM event JOIN hodnoceni USING (id_event) WHERE id_event = ? GROUP BY id_misto, nazev");
+            statement = connection.prepareStatement("SELECT *, AVG(hodnoceni) FROM event LEFT JOIN hodnoceni USING (id_event) WHERE id_event = ? GROUP BY id_misto, nazev");
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -94,7 +94,7 @@ public class Databaze {
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
         try {
-            statement = connection.prepareStatement("SELECT id_event, nazev, cena, zvyhodnena_cena, id_organizator, kapacita, popis, id_misto, AVG(hodnoceni) FROM event JOIN hodnoceni USING (id_event) GROUP BY id_misto, nazev");
+            statement = connection.prepareStatement("SELECT id_event, nazev, cena, zvyhodnena_cena, id_organizator, kapacita, popis, id_misto, AVG(hodnoceni) FROM event LEFT JOIN hodnoceni USING (id_event) GROUP BY id_misto, nazev");
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
