@@ -57,9 +57,9 @@ public class PridatEventUI {
             main.zobrazMainMenuUI();
         });
         centerButtonVytvorit.setOnMouseClicked(event -> {
-            Databaze.insertNewEvent(centerTextAreaNazev.getText(), Integer.parseInt(centerComboBoxMisto.getSelectionModel().getSelectedItem()),
+            Databaze.insertNewEvent(centerTextAreaNazev.getText(), (Databaze.getIdMista(centerComboBoxMisto.getSelectionModel().getSelectedItem())),
                     Integer.parseInt(centerTextAreaCena.getText()), Integer.parseInt(centerTextAreaCena.getText()),
-                    Integer.parseInt(centerTextAreaKapacita.getText()),centerTextAreaPopis.getText(), Integer.parseInt(centerComboBoxOrganizator.getSelectionModel().getSelectedItem()));
+                    Integer.parseInt(centerTextAreaKapacita.getText()),centerTextAreaPopis.getText(), Databaze.getIdOrganizatora(centerComboBoxOrganizator.getSelectionModel().getSelectedItem()));
 
             centerTextAreaNazev.clear();
             centerTextAreaCena.clear();

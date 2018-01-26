@@ -263,7 +263,7 @@ public class Databaze {
         PreparedStatement statement;
         int id = 0;
         try {
-            statement = connection.prepareStatement("SELECT id_organizator FROM organizator WHERE nazev = ?");
+            statement = connection.prepareStatement("SELECT id_organizator FROM organizator WHERE jmeno = ?");
             statement.setString(1, nazev);
             ResultSet rs = statement.executeQuery();
 
