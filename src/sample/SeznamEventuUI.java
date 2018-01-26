@@ -100,21 +100,17 @@ public class SeznamEventuUI {
         sloupecMisto.setPrefWidth(130);
         sloupecCena = new TableColumn("Cena");
         sloupecCena.setPrefWidth(130);
-        sloupecHodnoceni = new TableColumn("Hodnocení");
-        sloupecHodnoceni.setEditable(false);
 
         sloupecNazev.setCellValueFactory(new PropertyValueFactory<Event, String>("nazev"));
         sloupecOrganizator.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getOrganizator().getJmeno()));
         sloupecMisto.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMisto().getAdresa()));
         sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, Integer>("cena"));
-        sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("AVG(hodnoceni)"));
 
 
         sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecOrganizator.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecMisto.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecCena.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        sloupecHodnoceni.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
 
         if (main.getSpravce() != null || main.getAdmin() != null) {
@@ -123,7 +119,7 @@ public class SeznamEventuUI {
             table.setEditable(false);
         }
         table.setItems(dataEventu);
-        table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena, sloupecHodnoceni);
+        table.getColumns().addAll(sloupecNazev, sloupecOrganizator,sloupecMisto, sloupecCena);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         dataEventu.addAll(Databaze.getEventy());
