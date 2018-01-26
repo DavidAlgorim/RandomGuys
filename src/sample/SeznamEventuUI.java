@@ -107,7 +107,7 @@ public class SeznamEventuUI {
         sloupecOrganizator.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getOrganizator().getJmeno()));
         sloupecMisto.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMisto().getAdresa()));
         sloupecCena.setCellValueFactory(new PropertyValueFactory<Event, Integer>("cena"));
-        sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("AVG(hodnoceni)"));
+        sloupecHodnoceni.setCellValueFactory(new PropertyValueFactory<Event, Double>("hodnoceni"));
 
 
         sloupecNazev.setCellFactory(TextFieldTableCell.forTableColumn());
