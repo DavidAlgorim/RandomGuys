@@ -178,6 +178,10 @@ public class Main extends Application {
         mainStage.setScene(guestScene);
     }
 
+    public Uzivatel getUzivatel() {
+        return uzivatel;
+    }
+
     private void uiRegistrovany(){
         if (registredScene == null)
         {

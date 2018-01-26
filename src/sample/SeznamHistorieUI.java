@@ -14,7 +14,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.BooleanStringConverter;
+import sample.db.Databaze;
 import sample.db.Listek;
+import sample.db.Uzivatel;
 
 public class SeznamHistorieUI {
 
@@ -47,7 +49,7 @@ public class SeznamHistorieUI {
     private void vytvorScenu(){
         if (scene == null)
         {
-            borderPane.setCenter(vytvorTabulku());
+            borderPane.setCenter(vytvorTabulku(main.getUzivatel()));
             backButton.setText("Zpět");
             backButton.setPrefWidth(150);
             bottomHbox.getChildren().addAll(backButton);
@@ -58,7 +60,7 @@ public class SeznamHistorieUI {
         }
     }
 
-    private TableView<Listek> vytvorTabulku() {
+    private TableView<Listek> vytvorTabulku(Uzivatel uzivatel) {
         table = new TableView<Listek>();
         dataEventu = FXCollections.observableArrayList();
 
@@ -78,6 +80,9 @@ public class SeznamHistorieUI {
         table.setItems(dataEventu);
         table.getColumns().addAll(sloupecEvent, sloupecZvyhodneny);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        dataEventu.addAll(Databaze.getListkyUzivatele(uzivatel));
+
         return table;
     }
 }
