@@ -73,16 +73,16 @@ public class SeznamEventuUI {
 
     private void vytvorScenu(){
         borderPane = new BorderPane();
+        bottomHbox = new HBox();
+        _provizorni = new Button();
         borderPane.setCenter(vytvorTabulku());
         backButton = new Button();
         backButton.setText("Zpět");
         backButton.setPrefWidth(150);
-        bottomHbox = new HBox();
         bottomHbox.getChildren().addAll(backButton, _provizorni);
         bottomHbox.setPadding(new Insets(10));
         bottomHbox.setAlignment(Pos.CENTER);
         borderPane.setBottom(bottomHbox);
-        _provizorni = new Button();
         _provizorni.setText("Zakoupit lístky");
         scene = new Scene(borderPane, 1200,720);
     }

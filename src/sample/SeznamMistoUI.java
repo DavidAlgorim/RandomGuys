@@ -1,6 +1,5 @@
 package sample;
 
-import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,13 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
@@ -26,6 +19,8 @@ import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Misto;
 
+import java.util.Optional;
+
 public class SeznamMistoUI {
 
     private TableColumn<Misto, String> sloupecNazev;
@@ -36,9 +31,9 @@ public class SeznamMistoUI {
     private ObservableList<Misto> dataEventu;
 
     private Scene scene;
-    private BorderPane borderPane = new BorderPane();
-    private HBox bottomHbox = new HBox();
-    private Button backButton = new Button();
+    private BorderPane borderPane;
+    private HBox bottomHbox;
+    private Button backButton;
 
     private Main main;
     private Stage stage;
@@ -57,17 +52,17 @@ public class SeznamMistoUI {
     }
 
     private void vytvorScenu(){
-        if (scene == null)
-        {
-            borderPane.setCenter(vytvorTabulku());
-            backButton.setText("Zpět");
-            backButton.setPrefWidth(150);
-            bottomHbox.getChildren().addAll(backButton);
-            bottomHbox.setPadding(new Insets(10));
-            bottomHbox.setAlignment(Pos.CENTER);
-            borderPane.setBottom(bottomHbox);
-            scene = new Scene(borderPane, 1200,720);
-        }
+        borderPane = new BorderPane();
+        borderPane.setCenter(vytvorTabulku());
+        backButton = new Button();
+        backButton.setText("Zpět");
+        backButton.setPrefWidth(150);
+        bottomHbox = new HBox();
+        bottomHbox.getChildren().addAll(backButton);
+        bottomHbox.setPadding(new Insets(10));
+        bottomHbox.setAlignment(Pos.CENTER);
+        borderPane.setBottom(bottomHbox);
+        scene = new Scene(borderPane, 1200,720);
     }
 
     private TableView<Misto> vytvorTabulku() {
