@@ -242,7 +242,7 @@ public class Main extends Application {
             adminShowPlace.setPrefWidth(150);
             adminAddAdmin.setText("Přidat správce");
             adminAddAdmin.setPrefWidth(150);
-            adminShowAdmin.setText("Seznam správců");
+            adminShowAdmin.setText("Seznam adminů");
             adminShowAdmin.setPrefWidth(150);
             adminEventButtonHbox.getChildren().addAll(adminAddEvent,adminShowEvent);
             adminEventButtonHbox.setAlignment(Pos.CENTER);

@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import sample.db.Admin;
+import sample.db.Databaze;
+import sample.db.Spravce;
 
 public class SeznamAdminUI {
 
@@ -67,27 +69,25 @@ public class SeznamAdminUI {
 
         sloupecJmeno = new TableColumn("Jméno");
         sloupecJmeno.setPrefWidth(110);
-        sloupecPrijmeni = new TableColumn("Příjmení");
-        sloupecPrijmeni.setPrefWidth(130);
         sloupecHeslo = new TableColumn("Heslo");
         sloupecHeslo.setPrefWidth(130);
         sloupecUsername = new TableColumn("Username");
         sloupecUsername.setPrefWidth(130);
 
-        sloupecJmeno.setCellValueFactory(new PropertyValueFactory<Admin, String>("jmeno"));
-        sloupecPrijmeni.setCellValueFactory(new PropertyValueFactory<Admin, String>("telefon"));
+        sloupecJmeno.setCellValueFactory(new PropertyValueFactory<Admin, String>("jmeno"));;
         sloupecHeslo.setCellValueFactory(new PropertyValueFactory<Admin, String>("email"));
         sloupecUsername.setCellValueFactory(new PropertyValueFactory<Admin, String>("username"));
 
         sloupecJmeno.setCellFactory(TextFieldTableCell.forTableColumn());
-        sloupecPrijmeni.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecHeslo.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecUsername.setCellFactory(TextFieldTableCell.forTableColumn());
 
         table.setItems(seznamAdminu);
-        table.getColumns().addAll(sloupecJmeno, sloupecPrijmeni, sloupecUsername, sloupecHeslo);
+        table.getColumns().addAll(sloupecJmeno, sloupecUsername, sloupecHeslo);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+
+        seznamAdminu.addAll(Databaze.getAdmini());
         return table;
     }
 

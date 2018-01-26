@@ -190,17 +190,17 @@ public class Databaze {
 
 
 
-    public static List<Spravce> getSpravci(){
+    public static List<Admin> getAdmini(){
         Connection connection = getDBConn();
         PreparedStatement statement;
-        List<Spravce> spravci = new ArrayList<>();
+        List<Admin> admini = new ArrayList<>();
         try {
             statement = connection.prepareStatement("SELECT * FROM osoba WHERE status = ?");
-            statement.setString(1,"spravce");
+            statement.setString(1,"admin");
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                spravci.add(new Spravce(rs.getInt("id_osoba"), rs.getString("username"), rs.getString("jmeno"),rs.getString("email")));
+                admini.add(new Admin(rs.getInt("id_osoba"), rs.getString("username"), rs.getString("jmeno"),rs.getString("email")));
             }
 
             rs.close();
@@ -209,7 +209,7 @@ public class Databaze {
         } catch (SQLException | NullPointerException ex) {
             alertException(ex);
         }
-        return spravci;
+        return admini;
     }
 
 
