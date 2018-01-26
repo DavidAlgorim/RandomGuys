@@ -116,7 +116,7 @@ public class Databaze {
         return eventy;
     }
 
-    static List<Event> getEventyOrganizatora(Organizator organizator){
+    public static List<Event> getEventyOrganizatora(Organizator organizator){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -141,7 +141,7 @@ public class Databaze {
         return eventy;
     }
 
-    static List<Event> getEventyMista(Misto misto){
+    public static List<Event> getEventyMista(Misto misto){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -188,6 +188,30 @@ public class Databaze {
         }
         return organizatori;
     }
+
+    public static List<Listek> getListkyUzivatele(Uzivatel uzivatel) {
+                Connection connection = getDBConn();
+                PreparedStatement statement;
+                List<Listek> listky = new ArrayList<>();
+                try {
+                        statement = connection.prepareStatement("SELECT * FROM listek WHERE id_osoba = ?");
+                        statement.setInt(1, uzivatel.getId());
+
+                                ResultSet rs = statement.executeQuery();
+
+                                while (rs.next()) {
+                                listky.add(new Listek(rs.getInt("id_listek"), uzivatel, getEvent(rs.getInt("id_event")), rs.getBoolean("zvyhodneni")));
+                            }
+
+                               rs.close();
+                        statement.close();
+                        connection.close();
+
+                            } catch (SQLException | NullPointerException ex) {
+                        alertException(ex);
+                    }
+                return listky;
+            }
 
     public static List<Misto> getMista(){
         Connection connection = getDBConn();
@@ -492,7 +516,7 @@ public class Databaze {
     // Přidávání osob
 
 
-    static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
+    public static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
         try {
             Connection connection = getDBConn();
 
