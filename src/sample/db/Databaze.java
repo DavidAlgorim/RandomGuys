@@ -116,31 +116,7 @@ public class Databaze {
         return eventy;
     }
 
-    public static List<Listek> getListkyUzivatele(Uzivatel uzivatel) {
-        Connection connection = getDBConn();
-        PreparedStatement statement;
-        List<Listek> listky = new ArrayList<>();
-        try {
-            statement = connection.prepareStatement("SELECT * FROM listek WHERE id_osoba = ?");
-            statement.setInt(1, uzivatel.getId());
-
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                listky.add(new Listek(rs.getInt("id_listek"), uzivatel, getEvent(rs.getInt("id_event")), rs.getBoolean("zvyhodneni")));
-            }
-
-            rs.close();
-            statement.close();
-            connection.close();
-
-        } catch (SQLException | NullPointerException ex) {
-            alertException(ex);
-        }
-        return listky;
-    }
-
-    public static List<Event> getEventyOrganizatora(Organizator organizator){
+    static List<Event> getEventyOrganizatora(Organizator organizator){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -165,7 +141,7 @@ public class Databaze {
         return eventy;
     }
 
-    public static List<Event> getEventyMista(Misto misto){
+    static List<Event> getEventyMista(Misto misto){
         Connection connection = getDBConn();
         PreparedStatement statement;
         List<Event> eventy = new ArrayList<>();
@@ -409,11 +385,114 @@ public class Databaze {
         } catch (Exception e) {
             alertException(e);
         }
+//
+//        int mistoId = 0;
+//        try {
+//            PreparedStatement statement = connection.prepareStatement("SELECT id_misto FROM misto WHERE " +
+//                    "nazev = ?");
+//            statement.setString(1,nazev);
+//            ResultSet rs = statement.executeQuery();
+//
+//            mistoId = rs.getInt("id_misto");
+//
+//            rs.close();
+//            statement.close();
+//            connection.close();
+//        } catch (SQLException | NullPointerException ex) {
+//            alertException(ex);
+//        }
+//
+//        return getMisto(mistoId);
     }
+
+
+
+
+
+    /*
+
+    public static void databazeInsertNewHodnoceni(int hodnoceni, String textHodnoceni, int idEvent) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO hodnoceni (hodnoceni, text_hodnoceni, id_event) VALUES (?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, hodnoceni);
+            statement.setString(2, textHodnoceni);
+            statement.setInt(3, idEvent);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+    //lístek asi nejlépe řešit Overloadem, jinak mě moc nenapadá jak řešit registrovaného a neregistrovaného
+    public static void databazeInsertNewListek(String zakaznik, int zvyhodneni, int idEvent) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO listek (zakaznik, zvyhodneni, id_event) VALUES (?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setString(1, zakaznik);
+            statement.setInt(2, zvyhodneni);
+            statement.setInt(3, idEvent);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+    //stejná metoda pro registrovaného zákazníka, detaily zákazníka pak ideálně řešit přes sql JOIN
+    public static void databazeInsertNewListek(int zvyhodneni, int idEvent, int idOsoba) {
+        try {
+            //připojení k databázi
+            Connection connection = getDBConn();
+
+            //insert SQL příkaz
+            String insert = "INSERT INTO listek (zvyhodneni, id_event, id_osoba) VALUES (?, ?, ?)";
+
+            //statement
+            PreparedStatement statement = connection.prepareStatement(insert);
+            statement.setInt(1, zvyhodneni);
+            statement.setInt(2, idEvent);
+            statement.setInt(3, idOsoba);
+
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
+
+    */
+
+
     // Přidávání osob
 
 
-    public static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
+    static void insertNewSpravce(String jmeno, String email, String username, String heslo) {
         try {
             Connection connection = getDBConn();
 
@@ -459,7 +538,21 @@ public class Databaze {
     }
     
     
+public static void removeEvent(String nazev) {
+        Connection connection = getDBConn();
 
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM event where nazev = ?");
+            statement.setString(1, nazev);
+
+            statement.execute();
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            alertException(e);
+        }
+    }
 
     // Připojení DB
 
