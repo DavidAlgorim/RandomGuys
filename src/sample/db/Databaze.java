@@ -188,6 +188,32 @@ public class Databaze {
         return organizatori;
     }
 
+
+
+    public static List<Spravce> getSpravci(){
+        Connection connection = getDBConn();
+        PreparedStatement statement;
+        List<Spravce> spravci = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement("SELECT * FROM osoba WHERE status = ?");
+            statement.setString(1,"spravce");
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                spravci.add(new Spravce(rs.getInt("id_osoba"), rs.getString("username"), rs.getString("jmeno"),rs.getString("email")));
+            }
+
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException | NullPointerException ex) {
+            alertException(ex);
+        }
+        return spravci;
+    }
+
+
+
     public static List<Listek> getListkyUzivatele(Uzivatel uzivatel) {
                 Connection connection = getDBConn();
                 PreparedStatement statement;
