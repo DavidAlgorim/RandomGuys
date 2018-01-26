@@ -24,6 +24,7 @@ public class EventDetailUI {
     private HBox topHbox = new HBox();
     private Label titleLabel = new Label();
     private VBox centerVbox = new VBox();
+    private TextField centerTextFieldJmeno = new TextField();
     private TextArea centerTextAreaPopis = new TextArea();
     private TextField centerTextAreaNazev = new TextField();
     private TextField centerTextAreaOrganizator = new TextField();
@@ -36,6 +37,7 @@ public class EventDetailUI {
     private TextField centerTextAreaBody = new TextField();
     private Button centerButtonKoupit = new Button();
     private Button centerButtonZpet = new Button();
+    private Label centerLabelJmeno = new Label();
     private Label centerLabelPopis = new Label();
     private Label centerLabelNazev = new Label();
     private Label centerLabelOrganizator = new Label();
@@ -61,14 +63,14 @@ public class EventDetailUI {
         centerButtonKoupit.setOnMouseClicked(event -> {
             for (int i = 0; i < Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem()); i++) {
                 if(uzivatel == null)
-                    Databaze.insertNewListekNerergistrovany("jmeno",true,vybranyEvent);
+                    Databaze.insertNewListekNerergistrovany(centerTextFieldJmeno.getText(),true,vybranyEvent);
                 else
                     Databaze.insertNewListek(true,vybranyEvent,uzivatel);
             }
             for (int i = Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem());
                  i < Integer.valueOf(centerComboBoxPocet.getSelectionModel().getSelectedItem()); i++) {
                 if(uzivatel == null)
-                    Databaze.insertNewListekNerergistrovany("jmeno",false,vybranyEvent);
+                    Databaze.insertNewListekNerergistrovany(centerTextFieldJmeno.getText(), false,vybranyEvent);
                 else
                     Databaze.insertNewListek(false,vybranyEvent,uzivatel);
             }
@@ -122,6 +124,7 @@ public class EventDetailUI {
             centerTextAreaOrganizator.setEditable(false);
             centerTextAreaPopis.setEditable(false);
             centerTextAreaPopis.setPrefHeight(100);
+            centerLabelJmeno.setText("Vaše jméno");
             centerLabelPopis.setText("Popis");
             centerLabelNazev.setText("Název");
             centerLabelOrganizator.setText("Organizator");
@@ -136,7 +139,7 @@ public class EventDetailUI {
             centerComboBoxZvyhodneny.setPrefWidth(220);
             centerButtonKoupit.setPrefWidth(220);
             centerButtonZpet.setPrefWidth(220);
-            centerVbox.getChildren().addAll(centerLabelPopis, centerTextAreaPopis, centerLabelNazev, centerTextAreaNazev,
+            centerVbox.getChildren().addAll(centerLabelJmeno, centerTextFieldJmeno ,centerLabelPopis, centerTextAreaPopis, centerLabelNazev, centerTextAreaNazev,
                     centerLabelOrganizator, centerTextAreaOrganizator, centerLabelMisto, centerTextAreaMisto,
                     centerLabelCena, centerTextAreaCena, centerLabelPocet, centerComboBoxPocet, centerLabelZvyhodneny, centerComboBoxZvyhodneny,
                     centerLabelBody, centerTextAreaBody, centerButtonKoupit, centerButtonZpet);
