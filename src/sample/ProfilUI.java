@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Uzivatel;
 
 public class ProfilUI {
 
@@ -30,7 +31,7 @@ public class ProfilUI {
 
     public void nactiUI(Stage stage, Main main){
 
-        vytvorScenu();
+        vytvorScenu(main.getUzivatel());
 
         stage.setScene(scene);
         stage.show();
@@ -43,7 +44,7 @@ public class ProfilUI {
         });
     }
 
-    private void vytvorScenu(){
+    private void vytvorScenu(Uzivatel uzivatel){
         if (scene == null)
         {
             titleLabel.setText("Změna údajů");
@@ -56,12 +57,12 @@ public class ProfilUI {
             centerButtonZpet.setText("Zpět");
             centerButtonZmenit.setText("Změnit");
             centerLabelJmeno.setText("Jméno");
-            centerLabelPrijmeni.setText("Příjmení");
+            centerTextAreaJmeno.setText(uzivatel.getJmeno());
+            centerTextAreaJmeno.setEditable(false);
             centerLabelHeslo.setText("Heslo");
             centerButtonZpet.setPrefWidth(220);
             centerButtonZmenit.setPrefWidth(220);
-            centerVbox.getChildren().addAll(centerLabelJmeno, centerTextAreaJmeno, centerLabelPrijmeni,
-                    centerTextAreaPrijmeni, centerLabelHeslo, centerTextAreaHeslo, centerButtonZmenit,
+            centerVbox.getChildren().addAll(centerLabelJmeno, centerTextAreaJmeno, centerLabelHeslo, centerTextAreaHeslo, centerButtonZmenit,
                     centerButtonZpet);
             centerVbox.setSpacing(5);
             centerVbox.setMaxWidth(220);
