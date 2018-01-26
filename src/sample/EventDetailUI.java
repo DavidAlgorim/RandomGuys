@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Event;
 
 public class EventDetailUI {
 
@@ -41,8 +42,11 @@ public class EventDetailUI {
     private Label centerLabelPocet = new Label();
     private Label centerLabelZvyhodneny = new Label();
     private Label centerLabelBody = new Label();
+    private Event vybranyEvent;
 
-    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI){
+    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI, Event vybranyEvent){
+
+        this.vybranyEvent = vybranyEvent;
 
         vytvorScenu();
 
@@ -123,6 +127,11 @@ public class EventDetailUI {
             centerVbox.setMaxWidth(220);
             borderPane.setCenter(centerVbox);
 
+            centerTextAreaCena.setText(String.valueOf(vybranyEvent.getCena()));
+            centerTextAreaMisto.setText(vybranyEvent.getMisto().getNazev());
+            centerTextAreaNazev.setText(vybranyEvent.getNazev());
+            centerTextAreaOrganizator.setText(vybranyEvent.getOrganizator().getJmeno());
+            centerTextAreaPopis.setText(vybranyEvent.getPopis());
 
             scene = new Scene(borderPane,1200,720);
         }

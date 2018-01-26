@@ -1,42 +1,28 @@
 package sample;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Event;
-import sample.db.Organizator;
 
-import javax.xml.soap.Text;
-import java.util.Observable;
 import java.util.Optional;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 public class SeznamEventuUI {
 
@@ -72,7 +58,8 @@ public class SeznamEventuUI {
         });
 
         _provizorni.setOnMouseClicked(event -> {
-            eventDetailUI.nactiUI(stage, this);
+            eventDetailUI.nactiUI(stage, this,
+                    dataEventu.get(table.getSelectionModel().getFocusedIndex()));
         });
     }
 
@@ -140,7 +127,8 @@ public class SeznamEventuUI {
             MenuItem smazEvent = new MenuItem("Smazat");
             detailEventu.setOnAction(new EventHandler <ActionEvent> () {
                 public void handle(ActionEvent click) {
-                    eventDetailUI.nactiUI(stage, SeznamEventuUI.this);
+                    eventDetailUI.nactiUI(stage, SeznamEventuUI.this,
+                            dataEventu.get(table.getSelectionModel().getFocusedIndex()));
                 }
              });
             if (main.getSpravce() != null || main.getAdmin() != null) {
