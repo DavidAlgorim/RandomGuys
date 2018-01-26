@@ -21,6 +21,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import sample.db.Databaze;
 import sample.db.Event;
+import sample.db.Uzivatel;
 
 import java.util.Optional;
 
@@ -44,9 +45,12 @@ public class SeznamEventuUI {
     private Stage stage;
     private EventDetailUI eventDetailUI = new EventDetailUI();
 
-    public void nactiUI(Stage stage, Main main){
+    private Uzivatel uzivatel;
+
+    public void nactiUI(Stage stage, Main main, Uzivatel uzivatel){
         this.main = main;
         this.stage = stage;
+        this.uzivatel = uzivatel;
 
         vytvorScenu();
         stage.setScene(scene);
@@ -59,7 +63,7 @@ public class SeznamEventuUI {
 
         _provizorni.setOnMouseClicked(event -> {
             eventDetailUI.nactiUI(stage, this,
-                    dataEventu.get(table.getSelectionModel().getFocusedIndex()));
+                    dataEventu.get(table.getSelectionModel().getFocusedIndex()),uzivatel);
         });
     }
 
@@ -134,7 +138,7 @@ public class SeznamEventuUI {
             detailEventu.setOnAction(new EventHandler <ActionEvent> () {
                 public void handle(ActionEvent click) {
                     eventDetailUI.nactiUI(stage, SeznamEventuUI.this,
-                            dataEventu.get(table.getSelectionModel().getFocusedIndex()));
+                            dataEventu.get(table.getSelectionModel().getFocusedIndex()), uzivatel);
                 }
              });
             if (main.getSpravce() != null || main.getAdmin() != null) {

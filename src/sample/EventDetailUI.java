@@ -13,7 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.db.Databaze;
 import sample.db.Event;
+import sample.db.Uzivatel;
 
 public class EventDetailUI {
 
@@ -44,7 +46,7 @@ public class EventDetailUI {
     private Label centerLabelBody = new Label();
     private Event vybranyEvent;
 
-    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI, Event vybranyEvent){
+    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI, Event vybranyEvent, Uzivatel uzivatel){
 
         this.vybranyEvent = vybranyEvent;
 
@@ -55,6 +57,21 @@ public class EventDetailUI {
 
         centerButtonZpet.setOnMouseClicked(event -> {
             seznamEventuUI.zobrazSeznamEventuUI();
+        });
+        centerButtonKoupit.setOnMouseClicked(event -> {
+            for (int i = 0; i < Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem()); i++) {
+                if(uzivatel == null)
+                    Databaze.insertNewListekNerergistrovany("jmeno",true,vybranyEvent);
+                else
+                    Databaze.insertNewListek(true,vybranyEvent,uzivatel);
+            }
+            for (int i = Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem());
+                 i < Integer.valueOf(centerComboBoxPocet.getSelectionModel().getSelectedItem()); i++) {
+                if(uzivatel == null)
+                    Databaze.insertNewListekNerergistrovany("jmeno",false,vybranyEvent);
+                else
+                    Databaze.insertNewListek(false,vybranyEvent,uzivatel);
+            }
         });
         centerComboBoxPocet.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override

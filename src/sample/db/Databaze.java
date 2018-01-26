@@ -1,7 +1,6 @@
 package sample.db;
 
 import javafx.scene.control.Alert;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -477,7 +476,7 @@ public class Databaze {
     }
 
     //pro neregistrovanýho
-    public static void insertNewUzivatel(String jmeno, boolean zvyhodneni, Event event) {
+    public static void insertNewListekNerergistrovany(String jmeno, boolean zvyhodneni, Event event) {
         try {
             Connection connection = getDBConn();
 

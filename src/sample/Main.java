@@ -91,11 +91,11 @@ public class Main extends Application {
         });
 
         guestShowEvent.setOnMouseClicked(event -> {
-            seznamEventuUI.nactiUI(mainStage, this);
+            seznamEventuUI.nactiUI(mainStage, this, null);
         });
 
         registredShowEvent.setOnMouseClicked(event -> {
-            seznamEventuUI.nactiUI(mainStage, this);
+            seznamEventuUI.nactiUI(mainStage, this, uzivatel);
         });
 
         registredHistory.setOnMouseClicked(event -> {
@@ -125,7 +125,7 @@ public class Main extends Application {
         });
 
         adminShowEvent.setOnMouseClicked(event -> {
-            seznamEventuUI.nactiUI(mainStage, this);
+            seznamEventuUI.nactiUI(mainStage, this, null);
         });
 
         adminProfileButton.setOnMouseClicked(event -> {
