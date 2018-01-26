@@ -223,7 +223,7 @@ public class Main extends Application {
             adminTopVbox.getChildren().addAll(adminProfileButton, adminLogoutButton);
             adminTopVbox.setPadding(new Insets(20));
             adminTopVbox.setSpacing(10);
-            adminProfileButton.setText("Zde bude jméno a body");
+            adminProfileButton.setText("Profil");
             adminProfileButton.setPrefWidth(150);
             adminLogoutButton.setText("Odhlásit");
             adminLogoutButton.setPrefWidth(150);
