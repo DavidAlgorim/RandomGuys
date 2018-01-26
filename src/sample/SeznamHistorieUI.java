@@ -71,10 +71,10 @@ public class SeznamHistorieUI {
         sloupecZvyhodneny = new TableColumn("Zvýhodněný");
         sloupecZvyhodneny.setPrefWidth(130);
 
-        sloupecEvent.setCellValueFactory(new PropertyValueFactory<Listek, String>("event"));
+        //sloupecEvent.setCellValueFactory(new PropertyValueFactory<Listek, String>("zakaznik"));
         sloupecZvyhodneny.setCellValueFactory(new PropertyValueFactory<Listek, Boolean>("zvyhodneny"));
 
-        sloupecEvent.setCellFactory(TextFieldTableCell.forTableColumn());
+        //sloupecEvent.setCellFactory(TextFieldTableCell.forTableColumn());
         sloupecZvyhodneny.setCellFactory(TextFieldTableCell.<Listek, Boolean>forTableColumn(new BooleanStringConverter()));
 
         table.setItems(dataEventu);
