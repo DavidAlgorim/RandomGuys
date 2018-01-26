@@ -63,7 +63,7 @@ public class SeznamEventuUI {
 
         _provizorni.setOnMouseClicked(event -> {
             eventDetailUI.nactiUI(stage, this,
-                    dataEventu.get(table.getSelectionModel().getFocusedIndex()),uzivatel);
+                    dataEventu.get(table.getSelectionModel().getFocusedIndex()), main);
         });
     }
 
@@ -138,7 +138,7 @@ public class SeznamEventuUI {
             detailEventu.setOnAction(new EventHandler <ActionEvent> () {
                 public void handle(ActionEvent click) {
                     eventDetailUI.nactiUI(stage, SeznamEventuUI.this,
-                            dataEventu.get(table.getSelectionModel().getFocusedIndex()), uzivatel);
+                            dataEventu.get(table.getSelectionModel().getFocusedIndex()), main);
                 }
              });
             if (main.getSpravce() != null || main.getAdmin() != null) {

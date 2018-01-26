@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import sample.db.Databaze;
 import sample.db.Event;
-import sample.db.Uzivatel;
 
 public class EventDetailUI {
 
@@ -48,12 +47,21 @@ public class EventDetailUI {
     private Label centerLabelBody = new Label();
     private Event vybranyEvent;
 
-    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI, Event vybranyEvent, Uzivatel uzivatel){
+    public void nactiUI(Stage stage, SeznamEventuUI seznamEventuUI, Event vybranyEvent, Main main){
 
         this.vybranyEvent = vybranyEvent;
 
         vytvorScenu();
 
+        if (main.getUzivatel() == null || main.getAdmin() == null || main.getSpravce() == null)
+        {
+            centerTextFieldJmeno.setVisible(false);
+            centerLabelJmeno.setVisible(false);
+        }else
+        {
+            centerTextFieldJmeno.setVisible(true);
+            centerLabelJmeno.setVisible(true);
+        }
         stage.setScene(scene);
         stage.show();
 
@@ -62,17 +70,17 @@ public class EventDetailUI {
         });
         centerButtonKoupit.setOnMouseClicked(event -> {
             for (int i = 0; i < Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem()); i++) {
-                if(uzivatel == null)
+                if(main.getUzivatel() == null)
                     Databaze.insertNewListekNerergistrovany(centerTextFieldJmeno.getText(),true,vybranyEvent);
                 else
-                    Databaze.insertNewListek(true,vybranyEvent,uzivatel);
+                    Databaze.insertNewListek(true,vybranyEvent,main.getUzivatel());
             }
             for (int i = Integer.valueOf(centerComboBoxZvyhodneny.getSelectionModel().getSelectedItem());
                  i < Integer.valueOf(centerComboBoxPocet.getSelectionModel().getSelectedItem()); i++) {
-                if(uzivatel == null)
+                if(main.getUzivatel() == null)
                     Databaze.insertNewListekNerergistrovany(centerTextFieldJmeno.getText(), false,vybranyEvent);
                 else
-                    Databaze.insertNewListek(false,vybranyEvent,uzivatel);
+                    Databaze.insertNewListek(false,vybranyEvent,main.getUzivatel());
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Success");
