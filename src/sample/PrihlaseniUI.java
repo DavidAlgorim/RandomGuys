@@ -17,7 +17,7 @@ public class PrihlaseniUI {
     private Scene scene;
     private TextField username = new TextField();
     private Label usernameLabel = new Label();
-    private TextField password = new TextField();
+    private PasswordField password = new PasswordField();
     private Label passwordLabel = new Label();
     private BorderPane borderPane = new BorderPane();
     private VBox centerVbox = new VBox();
@@ -151,7 +151,7 @@ public class PrihlaseniUI {
             centerVbox.setMaxWidth(220);
             emailHbox.getChildren().addAll(usernameLabel, getUsername());
             passwordHbox.getChildren().addAll(passwordLabel, getPassword());
-            usernameLabel.setText("Email:  ");
+            usernameLabel.setText("Username:  ");
             usernameLabel.setPrefWidth(70);
             passwordLabel.setText("Heslo:  ");
             passwordLabel.setPrefWidth(70);
@@ -212,7 +212,7 @@ public class PrihlaseniUI {
         return password;
     }
 
-    public void setPassword(TextField password) {
+    public void setPassword(PasswordField password) {
         this.password = password;
     }
 
