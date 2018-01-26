@@ -285,6 +285,16 @@ public class Main extends Application {
             uiNeregistrovany();
     }
 
+    public Spravce getSpravce() {
+        return spravce;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+    
+    
+
 
     public static void main(String[] args) {
         launch(args);
